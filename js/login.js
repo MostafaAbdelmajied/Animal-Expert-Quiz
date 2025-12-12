@@ -1,5 +1,5 @@
 import {getAllStudents, getAllTeachers, validateEmail} from "./functions.js";
-// import * as localStorageManager from "./LocalStorageManager.js";
+import * as localStorageManager from "./LocalStorageManager.js";
 
 let loginForm = document.querySelector("#login-form");
 
@@ -50,5 +50,5 @@ function handleUserLogin(email, password, data)
         throw new Error("wrong credentials.!");
     }
     localStorage.setItem("user_id", user.id);
-    localStorage.setItem("user", user);
+    localStorageManager.store('user', user);
 }
