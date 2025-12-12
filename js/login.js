@@ -1,4 +1,5 @@
 import {getAllStudents, getAllTeachers, validateEmail} from "./functions.js";
+// import * as localStorageManager from "./LocalStorageManager.js";
 
 let loginForm = document.querySelector("#login-form");
 
@@ -36,9 +37,9 @@ loginForm.addEventListener("submit", function (e) {
 
 function handleUserLogin(email, password, data)
 {
-    // if(! validateEmail)
     validateEmail(email);
     let user = data.find(user => user.email === email);
+    // let user = localStorageManager.getByAttribute("email", email, 'students');
     if(! user)
     {
         throw new Error("wrong credentials.!");
