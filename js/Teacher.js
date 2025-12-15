@@ -7,7 +7,7 @@ export class Teacher {
         this.email = data.email;
         this.phone = data.phone;
         this.courseName = data.courseName;
-        this.exams_id = data.exams_id;
+        this.exams_id = data.exams_id || [];
     }
 
     addExam(examId) {
