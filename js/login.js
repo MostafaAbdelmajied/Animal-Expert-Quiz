@@ -21,11 +21,11 @@ loginForm.addEventListener("submit", function (e) {
         switch (typeValue){
             case "student":
                 let students = getAllStudents();
-                handleUserLogin(email, password, students);
+                handleUserLogin(email, password, 'student', students);
                 break;
             case "teacher": 
                 let teachers = getAllTeachers();
-                handleUserLogin(email, password, teachers);
+                handleUserLogin(email, password, 'teacher', teachers);
                 break;
         }
     } catch (error) {
@@ -35,7 +35,7 @@ loginForm.addEventListener("submit", function (e) {
     
 });
 
-function handleUserLogin(email, password, data)
+function handleUserLogin(email, password, type, data)
 {
     validateEmail(email);
     let user = data.find(user => user.email === email);
@@ -49,6 +49,15 @@ function handleUserLogin(email, password, data)
     {
         throw new Error("wrong credentials.!");
     }
-    localStorage.setItem("user_id", user.id);
+    localStorageManager.store("user_id", user.id);
     localStorageManager.store('user', user);
+    localStorageManager.store('user_type', type);
+    switch (type){
+        case "student":
+            window.location.href = "student-profile.html";
+            break;
+        case "teacher": 
+            window.location.href = "teacher-profile.html";
+            break;
+    }
 }
