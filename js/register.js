@@ -1,42 +1,52 @@
-const pictureInput = document.querySelector("#file");
-const image = document.querySelector("#image");
-const cameraIcon = document.querySelector("#cameraIcon");
-
-document.querySelector(".picture").addEventListener("click",()=>
-pictureInput.click())
-
-pictureInput.addEventListener('change', function() {
-  const file = pictureInput.files[0];
-  image.src = URL.createObjectURL(file);
-  URL.revokeObjectURL(file); 
-    image.style.setProperty("display","block","important");
-    cameraIcon.style.display = "none";
-});
-
+import {uploadImage} from "./cloud.js"
 class Student {
-  #img
+  static file;
   constructor(form) {
     this.userName = form.username.value;
     this.password = form.password.value;
     this.email = form.email.value;
     this.phone = form.mobile.value;
     this.grade = form.grade.value;
-    if (form.file.files[0]) {
-      this.#img = form.file.files[0];
-    }
+    this.image=null;
+    Student.file=form.file.files[0];
   }
 
-
+  async urlImage(file){
+    if (file){
+      this.image=await uploadImage(file);
+    }
+  }
 }
+
+
+const pictureInput = document.querySelector("#file");
+const image = document.querySelector("#image");
+const cameraIcon = document.querySelector("#cameraIcon");
+document.querySelector(".picture").addEventListener("click",()=>
+  pictureInput.click())
+
+pictureInput.addEventListener('change', function() {
+  const file = pictureInput.files[0];
+  image.src = URL.createObjectURL(file);
+  cameraIcon.classList.add('d-none');
+  image.classList.remove('d-none');
+
+
+});
+
 
 const form = document.forms[0];
 form.addEventListener("submit", function(e) {
   e.preventDefault(); 
   const student = new Student(form);
-  console.log(student);
   image.src=""
-  image.style.display="none"
-      cameraIcon.style.display = "block";
+  cameraIcon.classList.add('d-none');
+  image.classList.add('d-none');
   form.reset();
+  (async () => {
+    
+  await student.urlImage(Student.file);
+  //  console.log(student);
+  })()
   });
   
