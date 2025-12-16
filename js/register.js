@@ -26,13 +26,7 @@ class Student {
     }
   }
 
-  local() {
 
-  }
-
-  index(){
-
-  }
 }
 
 const form = document.forms[0];
