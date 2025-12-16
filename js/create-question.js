@@ -1,37 +1,39 @@
 import { Exam } from "./Exam.js";
 import * as localStorageManager from "./LocalStorageManager.js";
+import {uploadImage} from "./cloud.js";
 import { Question } from "./Question.js";
 let questionDataForm = document.getElementById('question-data-form');
 let errorDiv = document.querySelector(".error-div");
 let questionNumElement = document.getElementById("question-num");
+let totalDegreeSpan = document.getElementById("total-degree");
 
 let examId = localStorageManager.getStringKey('current_creation_exam_id');
 if(! examId)
     window.location.href = "create-exam.html";
 let exam = new Exam(localStorageManager.findById(examId, "exams"));
-
-questionNumElement.innerText = "Question" + " " + (exam.questions_id.length + 1);
-
+let totalDegree = 0;
 
 
-    questionDataForm.addEventListener('submit', function(e) {
+
+    questionDataForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         let questionData = getQuestionFormData();
         if(validateQuestionData(questionData)){
-            
+            questionData.image = await uploadImage(questionData.image);
             questionData.id = Date.now();
             exam.addQuestion(questionData.id);
             localStorageManager.update(exam.id, exam, "exams");
             localStorageManager.saveItem(questionData, "questions");
+            totalDegree += questionData.degree;
 
             if(exam.isComplete())
             {
-                Swal.fire({title: "Success", text: "question saved successfully", icon: "success"});
-                localStorageManager.deleteKey('current_creation_exam_id');
-                window.location.href = "teacher-profile.html";
+                window.location.href = "review-exam.html";
             }else{
                 Swal.fire({title: "Success", text: "question saved successfully", icon: "success"});
                 questionDataForm.reset();
+                questionNumElement.innerText = "Question" + " " + (exam.questions_id.length + 1);
+                totalDegreeSpan.innerText = totalDegree;
             }
         }
     });
@@ -44,23 +46,23 @@ function showError(message)
 }
 
 function getQuestionFormData() {
-    const questionCard = document.querySelector(".question-card");
-    const questionText = questionCard.querySelector('input[name="question"]').value.trim();
-    const degree = parseInt(questionCard.querySelector('input[name="degree"]').value);
-    const level = questionCard.querySelector('select[name="level"]').value;
+    let questionCard = document.querySelector(".question-card");
+    let questionText = questionCard.querySelector('input[name="question"]').value.trim();
+    let degree = parseInt(questionCard.querySelector('input[name="degree"]').value);
+    let level = questionCard.querySelector('select[name="level"]').value;
 
-    const answers = [];
+    let answers = [];
     questionCard.querySelectorAll('tbody tr').forEach((row, index) => {
-        const answerText = row.querySelector(`input[name="answers[${index}][text]"]`).value.trim();
-        const isCorrect = row.querySelector('input[name="correctAnswer"]:checked')?.dataset.rowIndex == index;
+        let answerText = row.querySelector(`input[name="answers[${index}][text]"]`).value.trim();
+        let isCorrect = row.querySelector('input[name="correctAnswer"]:checked')?.dataset.rowIndex == index;
         answers.push({
             text: answerText,
             correct: isCorrect || false
         });
     });
 
-    const imageInput = questionCard.querySelector('input[type="file"]');
-    const imageFile = imageInput.files[0] || null;
+    let imageInput = questionCard.querySelector('input[type="file"]');
+    let imageFile = imageInput.files[0] || null;
 
     return {
         question: questionText,
@@ -89,6 +91,11 @@ function validateQuestionData(data)
     if(! levels.includes(data.level))
     {
         showError("question level should be in easy, medium, hard");
+        return false;
+    }
+
+    if(! data.image){
+        showError("image is required");
         return false;
     }
 
