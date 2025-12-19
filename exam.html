@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+
+        .blue{
+            color: #667eea;
+        }
+        .timer-bar {
+            height: 8px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 5;
+            overflow: hidden;
+        }
+
+        .exam-container {
+            max-width: 600px;
+            margin: 60px auto 30px;
+            padding: 20px;
+        }
+
+
+        .level-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+.easy {
+    background: #10b981;
+    color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.middle {
+    background: #f59e0b;
+    color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.hard {
+    background: #ef4444;
+    color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+        .question-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+
+        .choice-btn {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 3px solid #e5e7eb;
+            background: white;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight:bold;
+            color: #374151;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: left;
+        }
+        
+        .choice-btn:hover:not(:disabled) {
+            border-color: #667eea;
+            transform: translateX(-5px);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .choice-btn.correct {
+            background: #22c55e;
+            border:3px solid #22c55e;
+            color: white;
+        }
+
+        .choice-btn.wrong {
+            background: #ef4444;
+            border:3px solid #ef4444;
+            color: white;
+        }
+
+        .choice-btn:disabled {
+            cursor: not-allowed;
+            
+        }
+
+        .next-btn {
+            background:#667eea;
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+
+        .next-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            opacity: .8;
+        }
+
+        .result-circle {
+            width: 250px;
+            height: 250px;
+            margin: 30px auto;
+            position: relative;
+        }
+
+        #circleProgress {
+            width: 250px;
+            height: 250px;
+        }
+
+        .result-title {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1f2937;
+            margin-bottom: 20px;
+        }
+
+
+        .home-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .home-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .timer-text {
+            
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ffffff;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: #667eea;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <div class="timer-bar">
+        <div class="h-100" style="background-color: #30CD69;" id="timerFill"></div>
+    </div>
+    <div class="timer-text" id="timerText">00:00</div>
+
+    <div class="exam-container">
+        <div class="card shadow-sm border-0 rounded-4 p-4 " id="questionCard">
+            <div class="  fw-bold mb-2 d-block blue" style="font-size:20px ;"  id="questionNumber">Question number</div>
+            <div class="text-center">
+                <span class="level-badge" id="levelBadge">easy</span>
+            </div>
+            <img src="" alt="Question" class="question-image" id="questionImage">
+            <div class="fs-4 fw-semibold text-dark mb-4 text-center" id="questionText">Lorem, ipsum.</div>
+            <div id="choicesContainer">
+                <button class="choice-btn" data-index="1">Lorem ipsum dolor sit.</button>
+                <button class="choice-btn" data-index="2">Lorem ipsum dolor sit.</button>
+                <button class="choice-btn" data-index="3">Lorem ipsum dolor sit.</button>
+                <button class="choice-btn" data-index="4">Lorem ipsum dolor sit.</button>
+            </div>
+            <div class="text-center mt-4">
+                <button class="next-btn " id="nextBtn"  disabled>Next</button>
+            </div>
+        </div>
+
+      <div class="card shadow-sm border-0 rounded-4 p-4 text-center" id="resultCard" style="display: none;">
+            <div class="result-title">Exam Results</div>
+            <div class="result-circle">
+                <div id="circleProgress"></div>
+            </div>
+            <div style="font-size: 20px; color: #6b7280;">
+                <span id="correctAnswers">0 </span>  From <span id="totalQuestions">0</span>
+            </div>
+            <button class="home-btn" >Home</button>
+        </div>
+    </div>
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/1.1.0/progressbar.min.js"></script>
+<script src="exam.js"></script>
+</body>
+</html>
