@@ -1,4 +1,5 @@
 import {uploadImage} from "./cloud.js"
+import {saveItem} from "./LocalStorageManager.js"
 class Student {
   static file;
   constructor(form) {
@@ -45,13 +46,10 @@ form.addEventListener("submit", function(e) {
   cameraIcon.classList.add('d-none');
   image.classList.add('d-none');
   form.reset();
-  let students = JSON.parse(localStorage.getItem('students')) || [];
   (async () => {
     
   await student.urlImage(Student.file);
-  //  console.log(student);
-  students.push(student);
-  localStorage.setItem('students', JSON.stringify(students));
+  saveItem(student,"students");
   })()
   });
   
