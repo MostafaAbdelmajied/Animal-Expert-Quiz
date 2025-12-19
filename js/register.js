@@ -2,14 +2,16 @@ import {uploadImage} from "./cloud.js"
 class Student {
   static file;
   constructor(form) {
-    this.id=Date().now;
-    this.userName = form.username.value;
-    this.password = form.password.value;
+    this.id=Date.now();
+    this.name = form.username.value;
+    this.password = btoa(form.password.value);
     this.email = form.email.value;
     this.phone = form.mobile.value;
     this.grade = form.grade.value;
     this.image=null;
     Student.file=form.file.files[0];
+    this.required_exams=[];
+    this.finished_exams=[];
   }
 
   async urlImage(file){
@@ -35,7 +37,6 @@ pictureInput.addEventListener('change', function() {
 
 });
 
-
 const form = document.forms[0];
 form.addEventListener("submit", function(e) {
   e.preventDefault(); 
@@ -44,10 +45,13 @@ form.addEventListener("submit", function(e) {
   cameraIcon.classList.add('d-none');
   image.classList.add('d-none');
   form.reset();
+  let students = JSON.parse(localStorage.getItem('students')) || [];
   (async () => {
     
   await student.urlImage(Student.file);
   //  console.log(student);
+  students.push(student);
+  localStorage.setItem('students', JSON.stringify(students));
   })()
   });
   
