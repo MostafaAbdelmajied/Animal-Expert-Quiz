@@ -2,7 +2,6 @@ import { Exam } from "./Exam.js";
 import * as localStorageManager from "./LocalStorageManager.js";
 let examInfoForm = document.getElementById("exam-info-form");
 let errorDiv = document.querySelector(".error-div");
-let exam;
 
 if(examInfoForm){
     examInfoForm.addEventListener("submit", function(e) {
@@ -12,11 +11,11 @@ if(examInfoForm){
             duration: examInfoForm.duration.value,
             questions_num: examInfoForm.questionNum.value
         };
-        console.log(examData);
 
         if(validateExamData(examData))
         {
             examData.id = Date.now();
+            examData.teacher_id = localStorageManager.getStringKey("user_id");
             localStorageManager.store('current_creation_exam_id', examData.id);
             localStorageManager.saveItem(examData, "exams");
             window.location.href = "create-question.html"

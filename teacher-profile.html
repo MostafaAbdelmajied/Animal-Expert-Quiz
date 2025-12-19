@@ -11,74 +11,140 @@
 </head>
 <body>
 
-<!-- start nav -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
-    <div class="container-fluid">
-        <a class="navbar-brand text-dark" href="#">
-            <img src="assets/logo.png" class="rounded-circle me-2" width="50">
-            Animal Expert Quiz
-        </a>
+<div class="d-flex flex-column flex-md-row">
 
-        <div>
-            <i class="fa fa-user"></i>
-            <span id="nav-user-name"></span>
-            <button class="btn btn-outline-success mx-3" id="logoutBtn">
-                <i class="fa fa-sign-out"></i>
-            </button>
+    <!-- Sidebar -->
+    <aside id="sidebar" class="flex-shrink-0 sidebar" style="width:240px; min-height:100vh;">
+    
+        <!-- Sidebar header -->
+        <div class="d-flex justify-content-center align-items-center mb-4" id="app-header">
+            <!-- Logo -->
+            <img src="assets/logo.png" alt="Logo" class="rounded-circle me-2" width="50px">
         </div>
-    </div>
-</nav>
-<!-- end nav -->
 
-<div class="container my-5">
+        <!-- taps -->
+        <ul class="nav flex-column gap-2">
+            <li class="nav-item">
+                <a href="teacher-profile.html" class="nav-link text-white">
+                    <i class="fa fa-user me-2"></i>Profile
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="create-exam.html" class="nav-link text-white">
+                    <i class="fa fa-plus me-2"></i>Create Exam
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="results.html" class="nav-link text-white">
+                    <i class="fa fa-chart-bar me-2"></i>Results
+                </a>
+            </li>
+        </ul>
+    </aside>
 
-    <div class="card shadow mb-5">
-        <div class="card-body">
-            <h4 class="mb-4">
-                <i class="fa fa-id-card me-2"></i>Profile Information
-            </h4>
 
-            <div class="row">
-                <div class="col-md-6 mb-3">
-                    <strong>Name</strong>
-                    <p id="profile-name" class="mb-0"></p>
-                </div>
+    <!-- Main content -->
+    <div class="flex-grow-1">
 
-                <div class="col-md-6 mb-3">
-                    <strong>Email</strong>
-                    <p id="profile-email" class="mb-0"></p>
-                </div>
+        <!-- Navbar -->
+        <nav class="navbar navbar-light bg-white px-3">
+            <button class="btn btn-outline-secondary me-3 d-md-none" id="sidebarToggle">
+                <i class="fas fa-bars"></i>
+            </button>
 
-                <div class="col-md-6 mb-3">
-                    <strong>Phone</strong>
-                    <p id="profile-phone" class="mb-0"></p>
-                </div>
+            <div class="ms-auto d-flex align-items-center">
+                <button class="btn btn-outline-secondary border-0 me-3" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
 
-                <div class="col-md-6 mb-3">
-                    <strong>Course Name</strong>
-                    <p id="profile-course-name" class="mb-0 badge bg-primary"></p>
+                <i class="fa fa-user me-2"></i>
+                <span id="nav-user-name" class="me-3"></span>
+
+                <button class="btn btn-outline-success" id="logoutBtn">
+                    <i class="fa fa-sign-out"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Content -->
+        <div class="container-fluid my-5">
+
+            <!-- Profile Information -->
+            <div class="card shadow mb-5">
+                <div class="card-body">
+                    <h4 class="card-header text-muted bg-transparent mb-4">
+                        <i class="fa fa-id-card me-2"></i>Profile Information
+                    </h4>
+
+                    <div class="row">
+                        <div class="col-12 col-md-6 mb-3">
+                            <strong>Name</strong>
+                            <p id="profile-name" class="mb-0"></p>
+                        </div>
+                        <div class="col-12 col-md-6 mb-3">
+                            <strong>Email</strong>
+                            <p id="profile-email" class="mb-0"></p>
+                        </div>
+                        <div class="col-12 col-md-6 mb-3">
+                            <strong>Phone</strong>
+                            <p id="profile-phone" class="mb-0"></p>
+                        </div>
+                        <div class="col-12 col-md-6 mb-3">
+                            <strong>Course Name</strong>
+                            <p id="profile-course-name" class="mb-0 badge bg-primary"></p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="d-flex justify-content-between">
-        <h4 class="card-title">
-            <i class="fa fa-book me-2"></i>My Exams
-        </h4>
-        <div>
-            <a href="create-exam.html" id="create-exam" class="btn btn-outline-primary">
-                <i class="fa fa-plus me-1"></i>Create New Exam</a>
-        </div>
-    </div>
+            <!-- My Exams -->
+            <div class="card shadow p-4">
+                <div class="d-flex justify-content-between flex-wrap mb-3">
+                    <h4 class="card-title">
+                        <i class="fa fa-book me-2"></i>My Exams
+                    </h4>
+                    <div>
+                        <a href="create-exam.html" id="create-exam" class="btn btn-outline-primary mt-2 mt-lg-0">
+                            <i class="fa fa-plus me-1"></i>Create New Exam
+                        </a>
+                    </div>
+                </div>
 
-    <div class="row" id="exams-container">
+                <div class="row" id="exams-container">
+                    <div class="col-12 col-md-6 col-lg-4 mb-3">
+                        <div class="card shadow-sm">
+                            <div class="card-body d-flex justify-content-between align-items-center flex-wrap">
+                                <!-- Exam Name -->
+                                <h5 class="mb-0 fw-bold">
+                                    JavaScript Final Exam
+                                </h5>
+
+                                <!-- Actions -->
+                                <div class="d-flex gap-3 mt-2 mt-md-0">
+                                    <a href="edit-exam.html?id=1" class="text-primary text-decoration-none">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+
+                                    <a href="exam-results.html?id=1" class="text-success text-decoration-none">
+                                        <i class="fas fa-chart-bar"></i> Results
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
     </div>
 
 </div>
 
 <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
 <script src="fontawesome/js/all.min.js"></script>
+<script src="js/main.js"></script>
+<script type="module" src="js/navbar.js"></script>
 <script type="module" src="js/teacher-profile.js"></script>
 </body>
 </html>

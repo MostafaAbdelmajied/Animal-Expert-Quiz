@@ -39,7 +39,6 @@ function handleUserLogin(email, password, type, data)
 {
     validateEmail(email);
     let user = data.find(user => user.email === email);
-    // let user = localStorageManager.getByAttribute("email", email, 'students');
     if(! user)
     {
         throw new Error("wrong credentials.!");
