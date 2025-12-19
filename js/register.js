@@ -2,6 +2,7 @@ import {uploadImage} from "./cloud.js"
 class Student {
   static file;
   constructor(form) {
+    this.id=Date().now;
     this.userName = form.username.value;
     this.password = form.password.value;
     this.email = form.email.value;
