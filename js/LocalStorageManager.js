@@ -58,3 +58,12 @@ export function deleteItem(id, key) {
     let newData = keyData.filter(item => item.id != id);
     store(key, newData);
 }
+
+export function findExam(id,examId, key)
+{
+    let data = getAll(key);
+    let item = data.find(item => {
+        return item.stdId == id && item.examId== examId;
+    });
+    return item || null;
+}

@@ -1,17 +1,120 @@
 import * as ls from "./js/LocalStorageManager.js";
+class StudentExams{
+
+    constructor(student) {
+        this.stdId=student.id;
+        this.examId=student.current_exam;
+        this.questions_id=this.shuffleQuestion();
+       this.questions=[];
+        this.question();
+    }
+
+    shuffleQuestion(){
+        let exam=ls.findById(this.examId,"exams");
+         return this.questions_id=shuffle(exam.questions_id);
+    }
+
+    question(){
+        for (let i=0;i<this.questions_id.length;++i){
+            let qs=ls.findById(this.questions_id[i],"questions");
+            qs.answers=shuffle(qs.answers);
+            qs.choice=null;
+            this.questions.push(qs);
+        }
+    }
+
+}
+    function shuffle(array) {
+  return array
+    .map(v => ({ v, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ v }) => v);
+}
+
+function storeExam(std,key){
+    if(!ls.findExam(std.id,std.current_exam,key)){
+        ls.saveItem(new StudentExams(std),key);
+        }else{
+            console.log("mawgod");
+        }
+}
+
 /**
  * the exact exam was showed for student in LS
  * finishExams=[stdId:{},] 
  * 
  */
+// student.required_exams.push(1766160800350);
+// student.current_exam=1766160800350;
+// ls.update(1766209767882,student,"students")
 
 function getCorrectAnswerIndex(answers) {
   return answers.findIndex(answer => answer.correct === true);
 }
-// ls.store("user_id",1766208342795)
+ls.store("user_id",1766209767882)
+let student=ls.findById((ls.getStringKey("user_id")),"students");
+// console.log(ls.findExam(student.id,student.current_exam,"StudentExams"));
+// storeExam(student.id,student.current_exam,"StudentExams");
+storeExam(student,"student_exam");
+// console.log(student);
+// console.log(ls.findById(1766160800350,"exams"))
 
-let student=ls.findById(+(ls.getStringKey("user_id")),"students");
-console.log(student);
+let studentExam=ls.findExam(student.id,student.current_exam,"student_exam");
+const questions=studentExam.questions
+console.log(questions)
+/**
+ * {
+    "id": 1766209767882,
+    "name": "lycelyfawa",
+    "password": "UGEkJHcwcmQh",
+    "email": "jydaj@mailinator.com",
+    "phone": "+201017012231",
+    "grade": "2",
+    "image": null,
+    "required_exams": [
+        1766160800350
+    ],
+    "finished_exams": [],
+    "current_exam": 1766160800350
+}
+
+{
+    "id": 1766160800350,
+    "name": "test",
+    "questions_num": "3",
+    "duration": "10",
+    "questions_id": [
+        1766160875059,
+        1766161012736,
+        1766161044098
+    ]
+}
+ */
+
+// let q=
+// {
+//     "question": "Lorem ipsum dolor sit amet.",
+//     "degree": 25,"level": "easy","image": "https://res.cloudinary.com/dpjzyrtcp/image/upload/v1766160877/bvivdputxyu1lif4dbol.jpg",
+//     "answers": [
+//         {
+//             "text": "Lorem ipsum dolor sit amet.",
+//             "correct": true
+//         },
+//         {
+//             "text": "Lorem ipsum dolor sit amet.",
+//             "correct": false
+//         },
+//         {
+//             "text": "Lorem ipsum dolor sit amet.",
+//             "correct": false
+//         },
+//         {
+//             "text": "Lorem ipsum dolor sit amet.",
+//             "correct": false
+//         }
+//     ],
+//     "id": 1766160875059
+// };
 // let exam=
 //     {
 //         "id": 1766160800350,
@@ -24,39 +127,13 @@ console.log(student);
 //             1766161044098
 //         ]
 //     };
-    // let q=
-    // {
-    //     "question": "Lorem ipsum dolor sit amet.",
-    //     "degree": 25,
-    //     "level": "easy",
-    //     "image": "https://res.cloudinary.com/dpjzyrtcp/image/upload/v1766160877/bvivdputxyu1lif4dbol.jpg",
-    //     "answers": [
-    //         {
-    //             "text": "Lorem ipsum dolor sit amet.",
-    //             "correct": true
-    //         },
-    //         {
-    //             "text": "Lorem ipsum dolor sit amet.",
-    //             "correct": false
-    //         },
-    //         {
-    //             "text": "Lorem ipsum dolor sit amet.",
-    //             "correct": false
-    //         },
-    //         {
-    //             "text": "Lorem ipsum dolor sit amet.",
-    //             "correct": false
-    //         }
-    //     ],
-    //     "id": 1766160875059
-    // };
 
 
-    console.log(q.answers[0].text)
-    let questionsNew=_.shuffle(exam["questions_id"]); 
-    console.log(questionsNew)
-    let newQues=findById(questionsNew[0],"questions")
-    console.log(newQues);
+    // console.log(q.answers[0].text)
+    // let questionsNew=_.shuffle(exam["questions_id"]); 
+    // console.log(questionsNew)
+    // let newQues=findById(questionsNew[0],"questions")
+    // console.log(newQues);
 
         // const questions = [
         //     {
@@ -164,8 +241,8 @@ function loadSession() {
 }
 
 function loadQuestion() {
-    let q=findById(questionsNew[currentQuestion],"questions");
-    console.log(q)
+    const q = questions[currentQuestion];
+
     answered = false;
     // const q = questions[currentQuestion];
 
@@ -353,20 +430,20 @@ homeBtn.addEventListener('click', () => {
 
 
 
-        const session=loadSession();
+        // const session=loadSession();
 
         // console.log(session);
-        if (session === 'result') {
-            showResult();
-            updateMainTimer();
+        // if (session === 'result') {
+        //     showResult();
+        //     updateMainTimer();
 
 
-        } else {
-            loadQuestion();
-            updateMainTimer();
-                        mainTimer = setInterval(() => {
-                timeRemaining--;
-                updateMainTimer();
-                saveSession();
-            }, 1000);
-        }
+        // } else {
+        //     loadQuestion();
+        //     updateMainTimer();
+        //                 mainTimer = setInterval(() => {
+        //         timeRemaining--;
+        //         updateMainTimer();
+        //         saveSession();
+        //     }, 1000);
+        // }
