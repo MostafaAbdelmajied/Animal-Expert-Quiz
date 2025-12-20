@@ -3,11 +3,11 @@ import { Exam } from "./Exam.js";
 
 let tableBody = document.getElementById("questions-table");
 let totalDegreeEl = document.getElementById("total-degree");
-let errorDiv = document.querySelector(".error-div span");
+let errorDiv = document.getElementById("error-div");
 let publishBtn = document.getElementById("publishExamBtn");
 let addQuestionBtn = document.getElementById("addQuestion");
 
-let examId = localStorageManager.getStringKey("current_creation_exam_id");
+let examId = localStorageManager.getStringKey("current_review_exam_id");
 if (!examId) window.location.href = "create-exam.html";
 
 let exam = new Exam(localStorageManager.findById(examId, "exams"));
@@ -58,7 +58,10 @@ function renderQuestions() {
             </td>
 
             <td class="text-center">
-                <button class="btn btn-sm btn-danger" onclick="deleteQuestion(${qid})">
+                <button class="btn btn-sm btn-outline-info" onclick="editQuestion(${qid})">
+                    <i class="fa fa-pen-alt"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-danger" onclick="deleteQuestion(${qid})">
                     <i class="fa fa-trash-alt"></i>
                 </button>
             </td>
@@ -142,3 +145,14 @@ window.updateLevel = function (questionId, newLevel) {
     localStorageManager.update(questionId, question, "questions");
     renderQuestions();
 };
+
+window.editQuestion = function (questionId){
+    localStorageManager.store("current_edit_question_id", questionId);
+    window.location.href = "edit-question.html";
+}
+
+function showError(message)
+{
+    errorDiv.style.display = "block";
+    errorDiv.querySelector('span').innerText = message;
+}
