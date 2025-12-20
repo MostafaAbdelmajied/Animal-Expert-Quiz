@@ -36,7 +36,7 @@ function validateExamData(data) {
         showError('Enter a valid exam duration!');
         return false;
     }
-    if(data.questions_num === "" || isNaN(data.questions_num) || Number(data.questions_num) < 15) {
+    if(data.questions_num === "" || isNaN(data.questions_num) || Number(data.questions_num) < 3) {
         showError('Enter a valid number of questions! minimum number is 15');
         return false;
     }
