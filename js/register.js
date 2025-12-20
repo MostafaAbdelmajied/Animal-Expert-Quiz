@@ -13,7 +13,7 @@ class Student {
     Student.file=form.file.files[0];
     this.required_exams=[];
     this.finished_exams=[];
-    this.prossing_exam;
+    this.current_exam=null;
   }
 
   async urlImage(file){
