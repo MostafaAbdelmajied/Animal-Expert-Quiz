@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile | Animal Expert Quiz</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar {
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        }
+
+        .profile-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 4px rgba(0,0,0,.15);
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,.15) !important;
+        }
+
+        .exam-card {
+            border-left: 4px solid #0d6efd;
+        }
+
+        .exam-card.completed {
+            border-left-color: #198754;
+        }
+
+
+
+        .badge {
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-box h3 {
+            margin: 0;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .stat-box p {
+            margin: 5px 0 0 0;
+            opacity: 0.9;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px 12px 0 0;
+            text-align: center;
+        }
+
+        .profile-avatar-large {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,.2);
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- start nav -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white">
+    <div class="container-fluid">
+        <a class="navbar-brand text-dark fw-bold" href="#">
+            <img src="https://via.placeholder.com/50/667eea/ffffff?text=AQ" class="rounded-circle me-2" width="50">
+            Animal Expert Quiz
+        </a>
+
+        <div class="user-section">
+            <img id="nav-avatar" src="https://ui-avatars.com/api/?name=Student&background=667eea&color=fff&size=45" 
+                 alt="Profile" class="profile-avatar">
+            <span id="nav-user-name" class="fw-semibold">Student Name</span>
+            <button class="btn btn-outline-danger btn-sm ms-2" id="logoutBtn">
+                <i class="fa fa-sign-out-alt"></i>
+            </button>
+        </div>
+    </div>
+</nav>
+<!-- end nav -->
+
+<div class="container my-5">
+
+    <!-- Profile Card -->
+    <div class="card shadow mb-5">
+        <div class="profile-header">
+            <img id="profile-avatar-large" 
+                 src="https://ui-avatars.com/api/?name=Student+Name&background=fff&color=667eea&size=120" 
+                 alt="Profile" class="profile-avatar-large">
+            <h3 id="profile-name-header" class="mb-0">Student Name</h3>
+            <p id="profile-email-header" class="mb-0 opacity-75">student@example.com</p>
+        </div>
+        <div class="card-body p-4">
+            <h5 class="mb-4">
+                <i class="fa fa-id-card me-2 text-primary"></i>Profile Information
+            </h5>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="d-flex align-items-center">
+                        <i class="fa fa-user text-muted me-2"></i>
+                        <div>
+                            <small class="text-muted d-block">Name</small>
+                            <strong id="profile-name">Ahmed Mohamed</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <div class="d-flex align-items-center">
+                        <i class="fa fa-envelope text-muted me-2"></i>
+                        <div>
+                            <small class="text-muted d-block">Email</small>
+                            <strong id="profile-email">ahmed.mohamed@school.com</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <div class="d-flex align-items-center">
+                        <i class="fa fa-phone text-muted me-2"></i>
+                        <div>
+                            <small class="text-muted d-block">Phone</small>
+                            <strong id="profile-phone">+20 123 456 7890</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <div class="d-flex align-items-center">
+                        <i class="fa fa-graduation-cap text-muted me-2"></i>
+                        <div>
+                            <small class="text-muted d-block">Grade</small>
+                            <span id="profile-grade" class="badge bg-primary">Grade 10</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Statistics -->
+    <!-- <div class="row mb-4">
+        <div class="col-md-4 mb-3">
+            <div class="stat-box">
+                <h3 id="total-exams">12</h3>
+                <p>Total Exams</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="stat-box" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                <h3 id="completed-exams">8</h3>
+                <p>Completed</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="stat-box" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                <h3 id="avg-score">85%</h3>
+                <p>Average Score</p>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Exams Section -->
+    <h4 class="mb-4">
+        <i class="fa fa-book me-2 text-primary"></i>My Exams
+    </h4>
+
+    <div class="row" id="exams-container">
+        <!-- Exam cards will be dynamically loaded here -->
+    </div>
+
+</div>
+
+<!-- Exam Card Templates (Hidden) -->
+<div id="exam-templates" style="display: none;">
+    <!-- Template for Completed Exam -->
+    <div class="col-md-6 col-lg-4 mb-4 exam-card-item" data-template="completed">
+        <div class="card shadow exam-card completed">
+            <div class="card-body">
+                <h5 class="card-title exam-title"></h5>
+                <p class="card-text text-muted exam-description"></p>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="badge bg-success">Completed</span>
+                    <strong class="text-success fs-4 exam-score"></strong>
+                </div>
+                <div class="mb-3">
+                    <small class="text-muted"><i class="fa fa-calendar me-1"></i>Completed: <span class="exam-date"></span></small>
+                </div>
+                <button class="btn btn-outline-primary btn-sm w-100 view-results-btn">
+                    <i class="fa fa-eye me-1"></i>View Results
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Template for Not Started Exam -->
+    <div class="col-md-6 col-lg-4 mb-4 exam-card-item" data-template="not-started">
+        <div class="card shadow exam-card" style="border-left-color: #0d6efd;">
+            <div class="card-body">
+                <h5 class="card-title exam-title"></h5>
+                <p class="card-text text-muted exam-description"></p>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="badge bg-info">Not Started</span>
+                    <span class="text-muted"><i class="fa fa-clock"></i> <span class="exam-duration"></span> min</span>
+                </div>
+                <div class="mb-3">
+                    <small class="text-muted"><i class="fa fa-calendar me-1"></i>Available now</small>
+                </div>
+                <button class="btn btn-primary btn-sm w-100 start-exam-btn">
+                    <i class="fa fa-play me-1"></i>Start Exam
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+<script type="module" src="student.js"></script>
+
+</body>
+</html>

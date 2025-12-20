@@ -2,11 +2,15 @@ import * as ls from "./js/LocalStorageManager.js";
 class StudentExams{
 
     constructor(student) {
+        this.id=Date.now();
         this.stdId=student.id;
+        this.finish=false;
         this.examId=student.current_exam;
         this.questions_id=this.shuffleQuestion();
        this.questions=[];
+       this.totalScore=0;
         this.question();
+        sessionStorage.setItem("currentExam",`${this.id}`)
     }
 
     shuffleQuestion(){
@@ -19,10 +23,14 @@ class StudentExams{
             let qs=ls.findById(this.questions_id[i],"questions");
             qs.answers=shuffle(qs.answers);
             qs.choice=null;
+            qs.correct=getCorrectAnswerIndex(qs.answers);
             this.questions.push(qs);
         }
     }
 
+}
+function getCorrectAnswerIndex(answers) {
+  return answers.findIndex(answer => answer.correct === true);
 }
     function shuffle(array) {
   return array
@@ -48,10 +56,7 @@ function storeExam(std,key){
 // student.current_exam=1766160800350;
 // ls.update(1766209767882,student,"students")
 
-function getCorrectAnswerIndex(answers) {
-  return answers.findIndex(answer => answer.correct === true);
-}
-ls.store("user_id",1766209767882)
+ls.store("user_id",1766252222138)
 let student=ls.findById((ls.getStringKey("user_id")),"students");
 // console.log(ls.findExam(student.id,student.current_exam,"StudentExams"));
 // storeExam(student.id,student.current_exam,"StudentExams");
@@ -60,6 +65,7 @@ storeExam(student,"student_exam");
 // console.log(ls.findById(1766160800350,"exams"))
 
 let studentExam=ls.findExam(student.id,student.current_exam,"student_exam");
+console.log(studentExam);
 const questions=studentExam.questions
 console.log(questions)
 /**
@@ -239,15 +245,22 @@ function loadSession() {
 
     return 'exam';
 }
+console.log(studentExam.id);
+console.log(studentExam.questions[currentQuestion]);
+
 
 function loadQuestion() {
     const q = questions[currentQuestion];
-
+    console.log(q)
     answered = false;
-    // const q = questions[currentQuestion];
+    if(!studentExam.finish){
+
+        studentExam.finish=true;
+        ls.update(studentExam.id,studentExam,"student_exam");
+    }
 
     document.getElementById('questionNumber').textContent =
-        `Question ${currentQuestion + 1} from ${questionsNew.length}:`;
+        `Question ${currentQuestion + 1} from ${questions.length}:`;
 
     document.getElementById('levelBadge').textContent = q.level;
     document.getElementById('levelBadge').className = `level-badge ${q.level}`;
@@ -257,12 +270,10 @@ function loadQuestion() {
 
     const container = document.getElementById('choicesContainer');
     container.innerHTML = '';
-    let choices=_.shuffle(q.answers);
-    console.log(choices);
-    choices.forEach((choice, index) => {
+    q.answers.forEach((choice, index) => {
         const btn = document.createElement('button');
         btn.className = 'choice-btn';
-        btn.textContent = choice.text;
+        btn.textContent = `${index}- ${choice.text}`;
         btn.dataset.index = index;
         container.appendChild(btn);
     });
@@ -275,6 +286,7 @@ function loadQuestion() {
         answered = true;
         const selected = userAnswers[currentQuestion];
         const correct = q.correct;
+        console.log(q.correct);
 
         document.querySelectorAll('.choice-btn').forEach((btn, i) => {
             btn.disabled = true;
@@ -293,8 +305,10 @@ function loadQuestion() {
         container.addEventListener('click', function (e) {
             const btn = e.target.closest('.choice-btn');
             if (!btn || answered) return;
-        
             const index = Number(btn.dataset.index);
+            // studentExam.questions[currentQuestion].choice=index;
+            // ls.update(studentExam.id,studentExam,"student_exam");
+            sessionStorage.removeItem("currentExam");
             selectAnswer(index);
         });
 
@@ -319,12 +333,14 @@ function loadQuestion() {
                     btn.classList.add('wrong');
                 }
             });
-            
+            studentExam.questions[currentQuestion].choice=index;
             document.getElementById('nextBtn').disabled = false;
             if (index === correct) {
                 totalScore +=questions[currentQuestion].degree;
+                studentExam.totalScore=totalScore;
                 console.log(totalScore);
             }
+            ls.update(studentExam.id,studentExam,"student_exam");
                 saveSession();
         }
 
@@ -360,13 +376,13 @@ function loadQuestion() {
             saveResult();
             document.getElementById('questionCard').style.display = 'none';
             document.getElementById('resultCard').style.display = 'block';
-            document.getElementById('correctAnswers').textContent = totalScore;
+            document.getElementById('correctAnswers').textContent = studentExam.totalScore;
             document.getElementById('totalQuestions').textContent = maxScore;
             
             var circleColor;
-            if (totalScore < 50) {
+            if (studentExam.totalScore < 50) {
                 circleColor = '#ef4444'; 
-            } else if (totalScore < 70) {
+            } else if (studentExam.totalScore < 70) {
                 circleColor = '#f59e0b';
             } else {
                 circleColor = '#22c55e'; 
@@ -402,7 +418,7 @@ function loadQuestion() {
                 }
             });
             
-            circle.animate(totalScore / 100);
+            circle.animate(studentExam.totalScore / 100);
         }
 
 
@@ -430,20 +446,24 @@ homeBtn.addEventListener('click', () => {
 
 
 
-        // const session=loadSession();
+        const session=loadSession();
+        let flag=sessionStorage.getItem("currentExam")
+        console.log(session);
+        if (session === 'result') {
+            showResult();
+            updateMainTimer();
 
-        // console.log(session);
-        // if (session === 'result') {
-        //     showResult();
-        //     updateMainTimer();
 
-
-        // } else {
-        //     loadQuestion();
-        //     updateMainTimer();
-        //                 mainTimer = setInterval(() => {
-        //         timeRemaining--;
-        //         updateMainTimer();
-        //         saveSession();
-        //     }, 1000);
-        // }
+        }else if(!session && !flag && studentExam.finish){
+                showResult();
+                updateMainTimer();
+            }
+         else {
+            loadQuestion();
+            updateMainTimer();
+                        mainTimer = setInterval(() => {
+                timeRemaining--;
+                updateMainTimer();
+                saveSession();
+            }, 1000);
+        }

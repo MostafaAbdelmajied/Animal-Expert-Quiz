@@ -1,10 +1,27 @@
+/**{
+    "id": 1766255358291,
+    "name": "jogumir",
+    "password": "UGEkJHcwcmQh",
+    "email": "kylatecym@mailinator.com",
+    "phone": "+201017012231",
+    "grade": "2",
+    "image": "https://res.cloudinary.com/dpjzyrtcp/image/upload/v1766255363/oxy1houfockkb7snf2ez.jpg",
+    "required_exams": [],
+    "finished_exams": [],
+    "current_exam": null
+} */
 students = [
     {
         id: 1,
         name: "mostafa",
         email: "mostafa@gmail.com",
         password: btoa("password"),
-        required_exams: []
+        required_exams: [],
+        phone:"+201017012231",
+        "image": "https://res.cloudinary.com/dpjzyrtcp/image/upload/v1766255363/oxy1houfockkb7snf2ez.jpg",
+        "finished_exams": [],
+        "current_exam": null,
+        grade:1
     },
     {
         id: 2,
