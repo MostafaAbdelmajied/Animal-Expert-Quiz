@@ -780,8 +780,24 @@ let exam_results = [
 ];
 
 
-localStorage.removeItem("students");
-localStorage.removeItem("teachers");
+if(localStorage.getItem("exams") || localStorage.getItem("questions") || localStorage.getItem("teachers")){
+  console.log("data found");
+  if(localStorage.getItem("user_id") && localStorage.getItem("user_type")){
+    console.log("login found insert");
+    switch (localStorage.getItem("user_type")) {
+      case "teacher":
+        window.location.href = "teacher-profile.html";
+        break;
+      case "student":
+        window.location.href = "student-profile.html";
+      default:
+        break;
+    }
+  }else{
+    window.location.href = "login.html";
+  }
+}
+
 // localStorage.removeItem("student_exam");
 localStorage.setItem("exams", JSON.stringify(exams));
 localStorage.setItem("questions", JSON.stringify(questions));
