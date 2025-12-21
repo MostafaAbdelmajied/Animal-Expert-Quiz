@@ -1143,7 +1143,6 @@ if(localStorage.getItem("exams") || localStorage.getItem("questions") || localSt
   }
 }
 
-// localStorage.removeItem("student_exam");
 localStorage.setItem("exams", JSON.stringify(exams));
 localStorage.setItem("questions", JSON.stringify(questions));
 localStorage.setItem("students", JSON.stringify(students));
