@@ -67,3 +67,9 @@ export function findExam(id,examId, key)
     });
     return item || null;
 }
+export function completeExams(id, key) { 
+    let data = getAll(key); 
+    let items = data.filter(item => item.stdId == id); 
+    return items.length ? items : null; 
+}
+

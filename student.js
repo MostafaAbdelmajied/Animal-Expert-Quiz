@@ -36,7 +36,105 @@ import * as ls from "./js/LocalStorageManager.js"
 //     ],
 //     "id": 1766160875059
 // };
-
+/**
+ * [
+    {
+        "id": 1766253025663,
+        "stdId": 1766252222138,
+        "finish": true,
+        "examId": 1766251919266,
+        "questions_id": [
+            1766251933571,
+            1766251960490,
+            1766251946178
+        ],
+        "questions": [
+            {
+                "question": "Esse reprehenderit",
+                "degree": 25,
+                "level": "easy",
+                "image": "https://res.cloudinary.com/dpjzyrtcp/image/upload/v1766251936/of8bzyrzddfzgnqnufax.jpg",
+                "answers": [
+                    {
+                        "text": "Veritatis amet dolo",
+                        "correct": false
+                    },
+                    {
+                        "text": "Vel itaque eum labor",
+                        "correct": false
+                    },
+                    {
+                        "text": "Fuga Ipsum volupta",
+                        "correct": false
+                    },
+                    {
+                        "text": "Quas sed labore magn",
+                        "correct": true
+                    }
+                ],
+                "id": 1766251933571,
+                "choice": 3,
+                "correct": 3
+            },
+            {
+                "question": "Ab Nam deleniti magn",
+                "degree": 50,
+                "level": "hard",
+                "image": "https://res.cloudinary.com/dpjzyrtcp/image/upload/v1766251963/tjlhgvinozmqa2r4gmai.jpg",
+                "answers": [
+                    {
+                        "text": "Lorem sed fugiat at",
+                        "correct": false
+                    },
+                    {
+                        "text": "Qui accusantium sint",
+                        "correct": false
+                    },
+                    {
+                        "text": "Eum quia modi volupt",
+                        "correct": true
+                    },
+                    {
+                        "text": "Nulla ut quisquam id",
+                        "correct": false
+                    }
+                ],
+                "id": 1766251960490,
+                "choice": null,
+                "correct": 2
+            },
+            {
+                "question": "Aute dolorem dolor e",
+                "degree": 25,
+                "level": "medium",
+                "image": "https://res.cloudinary.com/dpjzyrtcp/image/upload/v1766251949/gr3ksdj9is3dufllf0hf.jpg",
+                "answers": [
+                    {
+                        "text": "Molestiae adipisci e",
+                        "correct": false
+                    },
+                    {
+                        "text": "Et aut doloremque te",
+                        "correct": false
+                    },
+                    {
+                        "text": "Non ut quisquam dist",
+                        "correct": true
+                    },
+                    {
+                        "text": "Qui quis exercitatio",
+                        "correct": false
+                    }
+                ],
+                "id": 1766251946178,
+                "choice": null,
+                "correct": 2
+            }
+        ],
+        "totalScore": 25
+    }
+]
+ */
 // Sample profile data - Replace with actual data from your backend
 let std=ls.findById(ls.getStringKey("user_id"),"students");
 // console.log(ls.getStringKey("user_id"));
@@ -80,7 +178,6 @@ document.getElementById('logoutBtn').addEventListener('click', function() {
         // window.location.href = 'login.html';
     }
 });
-
 // Start exam function
 function startExam(examId) {
     console.log('Starting exam:', examId);
@@ -152,16 +249,21 @@ const examsData = [
 function renderExams(exams) {
     const container = document.getElementById('exams-container');
     container.innerHTML = ''; // Clear existing cards
-    
-    exams.forEach(exam => {
+    console.log(exams);
+    if(Array.isArray(exams) && exams[0]!= null ){
+      console.log(exams);
+      exams.forEach(exam => {
         let card;
-        if (exam.status === 'completed') {
-            card = createCompletedExamCard(exam);
-        } else {
-            card = createNotStartedExamCard(exam);
-        }
-        container.appendChild(card);
-    });
+        
+        if (exam.finish) {
+          console.log(exam);
+          card = createCompletedExamCard(exam);
+         } else  {
+           card = createNotStartedExamCard(exam);
+          }
+           container.appendChild(card);
+      });
+    }
     
     // Update statistics
     // updateStatistics(exams);
@@ -172,30 +274,53 @@ function createCompletedExamCard(exam) {
     // Get template and clone it
     const template = document.querySelector('[data-template="completed"]');
     const clone = template.cloneNode(true);
-    
+    console.log("inner",exam)
     // Remove template attribute and make visible
     clone.removeAttribute('data-template');
     clone.style.display = '';
-    
+    // ls.findById(exam.examId,"exams");
     // Fill in the data
-    clone.querySelector('.exam-title').textContent = exam.name;
+    // console.log(ls.findById(exam.examId,"exams").name);
+    clone.querySelector('.exam-title').textContent = ls.findById(exam.examId,"exams").name;
     // clone.querySelector('.exam-description').textContent = exam.description;
-    clone.querySelector('.exam-score').textContent = exam.score + '%';
-    clone.querySelector('.exam-date').textContent = exam.completedDate;
+    clone.querySelector('.exam-score').textContent = exam.totalScore + '%';
+    const timestamp = exam.id;
+const date = new Date(timestamp);
+
+const formatted = date.toLocaleString('en-US', {
+  year: 'numeric',
+  month: 'short',
+  day: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit',
+  second: '2-digit',
+  hour12: true
+});
+    clone.querySelector('.exam-date').textContent = formatted;
     
     // Add click event for view results button
-    const viewBtn = clone.querySelector('.view-results-btn');
-    viewBtn.addEventListener('click', () => viewExamResults(exam.id));
+    // const viewBtn = clone.querySelector('.view-results-btn');
+    // viewBtn.addEventListener('click', () => viewExamResults(exam.id));
     
     return clone;
 }
-
+// {
+//   "id": 1766251919266,
+//   "name": "tst",
+//   "questions_num": "3",
+//   "duration": "15",
+//   "questions_id": [
+//     1766251933571,
+//     1766251946178,
+//     1766251960490
+//   ]
+// }
 // Function to create not started exam card
 function createNotStartedExamCard(exam) {
     // Get template and clone it
     const template = document.querySelector('[data-template="not-started"]');
     const clone = template.cloneNode(true);
-    
+    console.log("=======",exam)
     // Remove template attribute and make visible
     clone.removeAttribute('data-template');
     clone.style.display = '';
@@ -207,7 +332,19 @@ function createNotStartedExamCard(exam) {
     
     // Add click event for start exam button
     const startBtn = clone.querySelector('.start-exam-btn');
-    startBtn.addEventListener('click', () => startExam(exam.id));
+    startBtn.dataset.index = exam.id;
+
+    startBtn.addEventListener('click', function (e) {
+
+      // console.log(e);
+      // console.log(this);
+      // console.log(Number(this.dataset.index));
+      
+      sessionStorage.setItem("currentExam",Number(this.dataset.index));
+      // window.location.href = 'exxxxxx.html';
+      window.location.replace('exxxxxx.html');
+    }
+    );
     
     return clone;
 }
@@ -232,7 +369,31 @@ function createNotStartedExamCard(exam) {
 
 // Load exams when page loads
 function loadExams() {
-    renderExams(examsData);
+  // let id=ls.getStringKey("user_id");
+  // console.log(std.id);
+  let exam=[]
+  let completeExams=ls.completeExams(std.id,"student_exam");
+  console.log(completeExams)
+  if(completeExams){
+    exam.push(...completeExams);
+  }
+  // if(completeExams){
+
+  //   renderExams(completeExams);
+  // }
+    let questions=ls.findById(std.id,"students").required_exams;
+    console.log(questions)
+    // 1766251933571
+    
+    if(questions.length>0){
+      for(let i=0 ;i<questions.length;++i){
+        exam.push(ls.findById(questions[i],"exams"))
+      console.log(ls.findById(questions[i],"exams"));
+      }
+      renderExams(exam);
+    }
+    
+    // renderExams();
 }
 
 // Initialize everything when DOM is ready

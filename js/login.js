@@ -1,6 +1,6 @@
 import {getAllStudents, getAllTeachers, validateEmail} from "./functions.js";
 import * as localStorageManager from "./LocalStorageManager.js";
-
+sessionStorage.removeItem("currentExam")
 let loginForm = document.querySelector("#login-form");
 
 loginForm.addEventListener("submit", function (e) {

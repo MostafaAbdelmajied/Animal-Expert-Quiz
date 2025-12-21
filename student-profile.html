@@ -102,12 +102,12 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white">
     <div class="container-fluid">
         <a class="navbar-brand text-dark fw-bold" href="#">
-            <img src="https://via.placeholder.com/50/667eea/ffffff?text=AQ" class="rounded-circle me-2" width="50">
+            <img src="./assets/logo.png" class="rounded-circle me-2" width="50">
             Animal Expert Quiz
         </a>
 
         <div class="user-section">
-            <img id="nav-avatar" src="https://ui-avatars.com/api/?name=Student&background=667eea&color=fff&size=45" 
+            <img id="nav-avatar" src="" 
                  alt="Profile" class="profile-avatar">
             <span id="nav-user-name" class="fw-semibold">Student Name</span>
             <button class="btn btn-outline-danger btn-sm ms-2" id="logoutBtn">
@@ -124,7 +124,7 @@
     <div class="card shadow mb-5">
         <div class="profile-header">
             <img id="profile-avatar-large" 
-                 src="https://ui-avatars.com/api/?name=Student+Name&background=fff&color=667eea&size=120" 
+                 src="" 
                  alt="Profile" class="profile-avatar-large">
             <h3 id="profile-name-header" class="mb-0">Student Name</h3>
             <p id="profile-email-header" class="mb-0 opacity-75">student@example.com</p>
@@ -214,11 +214,11 @@
 <!-- Exam Card Templates (Hidden) -->
 <div id="exam-templates" style="display: none;">
     <!-- Template for Completed Exam -->
-    <div class="col-md-6 col-lg-4 mb-4 exam-card-item" data-template="completed">
-        <div class="card shadow exam-card completed">
+    <div class="col-md-6 col-lg-4 mb-4 exam-card-item " data-template="completed">
+        <div class="card shadow exam-card completed pb-4 ">
             <div class="card-body">
                 <h5 class="card-title exam-title"></h5>
-                <p class="card-text text-muted exam-description"></p>
+                <!-- <p class="card-text text-muted exam-description"></p> -->
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <span class="badge bg-success">Completed</span>
                     <strong class="text-success fs-4 exam-score"></strong>
@@ -226,9 +226,9 @@
                 <div class="mb-3">
                     <small class="text-muted"><i class="fa fa-calendar me-1"></i>Completed: <span class="exam-date"></span></small>
                 </div>
-                <button class="btn btn-outline-primary btn-sm w-100 view-results-btn">
+                <!-- <button class="btn btn-outline-primary btn-sm w-100 view-results-btn">
                     <i class="fa fa-eye me-1"></i>View Results
-                </button>
+                </button> -->
             </div>
         </div>
     </div>
@@ -238,7 +238,7 @@
         <div class="card shadow exam-card" style="border-left-color: #0d6efd;">
             <div class="card-body">
                 <h5 class="card-title exam-title"></h5>
-                <p class="card-text text-muted exam-description"></p>
+                <!-- <p class="card-text text-muted exam-description"></p> -->
                 <div class="d-flex justify-content-between align-items-center mb-3">
                     <span class="badge bg-info">Not Started</span>
                     <span class="text-muted"><i class="fa fa-clock"></i> <span class="exam-duration"></span> min</span>
