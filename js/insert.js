@@ -18,7 +18,7 @@ students = [
     name: "ali",
     email: "ali@gmail.com",
     password: btoa("password"),
-    required_exams: [],
+    required_exams: [1766314902049],
     phone: "+201017012231",
     image:
       "https://res.cloudinary.com/dpjzyrtcp/image/upload/v1766255363/oxy1houfockkb7snf2ez.jpg",
@@ -31,7 +31,7 @@ students = [
     name: "ahmed",
     email: "ahmed@gmail.com",
     password: btoa("password"),
-    required_exams: [],
+    required_exams: [1766314902049],
     phone: "+201017012231",
     image:
       "https://res.cloudinary.com/dpjzyrtcp/image/upload/v1766255363/oxy1houfockkb7snf2ez.jpg",
@@ -1126,9 +1126,7 @@ let complete=[{
 }];
 
 if(localStorage.getItem("exams") || localStorage.getItem("questions") || localStorage.getItem("teachers")){
-  console.log("data found");
   if(localStorage.getItem("user_id") && localStorage.getItem("user_type")){
-    console.log("login found insert");
     switch (localStorage.getItem("user_type")) {
       case "teacher":
         window.location.href = "teacher-profile.html";
