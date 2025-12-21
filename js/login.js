@@ -3,7 +3,10 @@ import * as localStorageManager from "./LocalStorageManager.js";
 sessionStorage.removeItem("currentExam")
 let loginForm = document.querySelector("#login-form");
 
-if(localStorage.getItem("user_id") && localStorage.getItem("user_type")){
+const userId = JSON.parse(localStorage.getItem("user_id"));
+const userType = localStorage.getItem("user_type");
+
+if(userId != null && userType != null){
     switch (localStorage.getItem("user_type")) {
     case "teacher":
         window.location.href = "teacher-profile.html";

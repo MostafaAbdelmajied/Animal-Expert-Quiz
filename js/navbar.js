@@ -5,7 +5,7 @@ let logoutBtn = document.getElementById('logoutBtn');
 
 document.getElementById("nav-user-name").textContent = user.name;
 logoutBtn.addEventListener('click', function () {
-    localStorage.setItem('user_id', null);
-    localStorage.setItem('user', null);
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('user');
     window.location.href = "login.html";
 });
