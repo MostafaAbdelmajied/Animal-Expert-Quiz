@@ -2,7 +2,7 @@ import * as localStorageManager from "./LocalStorageManager.js";
 import { Teacher } from "./Teacher.js";
 let teacher = new Teacher(localStorageManager.getAll('user'));
 let exams = localStorageManager.filterByAttribute('teacher_id', teacher.id, 'exams');
-console.log(exams);
+// console.log(exams);
 let examsTableBody = document.getElementById('exams-table');
 exams.forEach(exam => {
     examsTableBody.innerHTML += `

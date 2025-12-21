@@ -57,7 +57,7 @@ function storeExam(std,key){
         if(!ls.findExam(std.id,std.current_exam,key)){
             ls.saveItem(new StudentExams(std),key);
         }else{
-            console.log("mawgod");
+            // console.log("mawgod");
         }
         }
 }
@@ -88,7 +88,7 @@ function loadValues(){
 
         const session=loadSession();
         let flag=sessionStorage.getItem("currentExam")
-        console.log(session);
+        // console.log(session);
         if (session === 'result' || finish[1]) {
             showResult();
             updateMainTimer();
@@ -152,13 +152,13 @@ function loadSession() {
 
     return 'exam';
 }
-console.log(studentExam.id);
-console.log(studentExam.questions[currentQuestion]);
+// console.log(studentExam.id);
+// console.log(studentExam.questions[currentQuestion]);
 
 
 function loadQuestion() {
     const q = questions[currentQuestion];
-    console.log(q)
+    // console.log(q)
     answered = false;
     if(!studentExam.finish){
 
@@ -191,7 +191,7 @@ function loadQuestion() {
         answered = true;
         const selected = userAnswers[currentQuestion];
         const correct = q.correct;
-        console.log(q.correct);
+        // console.log(q.correct);
 
         document.querySelectorAll('.choice-btn').forEach((btn, i) => {
             btn.disabled = true;
@@ -239,7 +239,7 @@ function loadQuestion() {
             if (index === correct) {
                 totalScore +=questions[currentQuestion].degree;
                 studentExam.totalScore=totalScore;
-                console.log(totalScore);
+                // console.log(totalScore);
             }
             ls.update(studentExam.id,studentExam,"student_exam");
                 saveSession();

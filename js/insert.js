@@ -1126,7 +1126,9 @@ let complete=[{
 }];
 
 if(localStorage.getItem("exams") || localStorage.getItem("questions") || localStorage.getItem("teachers")){
+  // console.log("data found");
   if(localStorage.getItem("user_id") && localStorage.getItem("user_type")){
+    // console.log("login found insert");
     switch (localStorage.getItem("user_type")) {
       case "teacher":
         window.location.href = "teacher-profile.html";

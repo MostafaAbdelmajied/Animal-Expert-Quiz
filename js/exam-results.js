@@ -6,7 +6,7 @@ let results = localStorageManager.filterByAttribute('examId', examId, 'student_e
 let examsTableBody = document.getElementById('exams-table');
 
 results.forEach(result => {
-    console.log(result);
+    // console.log(result);
     let exam = localStorageManager.findById(result.examId, 'exams');
     let student = localStorageManager.findById(result.stdId, 'students');
     examsTableBody.innerHTML += `
