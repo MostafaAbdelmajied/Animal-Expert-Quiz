@@ -1,129 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Animal Expert Quiz</title>
+    <title>Profile</title>
+
     <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="fontawesome/css/all.min.css">
-    <style>
-        body{
-            background-color: #001e4d;
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
-    <div class="container-fluid">
-        <a class="navbar-brand text-dark" href="#">
-            <img src="assets/logo.png" class="rounded-circle me-2" width="50">
-            Animal Expert Quiz
-        </a>
+    <div class="d-flex flex-column flex-md-row">
 
-        <div>
-            <i class="fa fa-user"></i>
-            <span id="nav-user-name"></span>
-            <button class="btn btn-outline-success mx-3" id="logoutBtn">
-                <i class="fa fa-sign-out"></i>
-            </button>
+        <!-- Sidebar -->
+        <aside id="sidebar" class="flex-shrink-0 sidebar" style="width:240px; min-height:100vh;">
+
+            <!-- Sidebar header -->
+            <div class="d-flex justify-content-center align-items-center mb-4" id="app-header">
+                <!-- Logo -->
+                <img src="assets/logo.png" alt="Logo" class="rounded-circle me-2" width="50px">
+            </div>
+
+            <!-- taps -->
+            <ul class="nav flex-column gap-2">
+                <li class="nav-item">
+                    <a href="teacher-profile.html" class="nav-link text-white">
+                        <i class="fa fa-user me-2"></i>Profile
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="create-exam.html" class="nav-link text-white">
+                        <i class="fa fa-plus me-2"></i>Create Exam
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="teacher-exams.html" class="nav-link text-white">
+                        <i class="fa fa-file-signature me-2"></i>My exams
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+
+        <!-- Main content -->
+        <div class="flex-grow-1">
+
+            <!-- Navbar -->
+            <nav class="navbar navbar-light bg-white px-3">
+                <button class="btn btn-outline-secondary me-3 d-md-none" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <div class="ms-auto d-flex align-items-center">
+                    <button class="btn btn-outline-secondary border-0 me-3" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+
+                    <i class="fa fa-user me-2"></i>
+                    <span id="nav-user-name" class="me-3"></span>
+
+                    <button class="btn btn-outline-success" id="logoutBtn">
+                        <i class="fa fa-sign-out"></i>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Content -->
+            <form id="question-data-form">
+                <div class="card shadow p-4">
+                    <div class="card question-card p-3 mb-4 shadow-sm">
+                        <h5 class="mb-3" id="question-num">Edit Question</h5>
+
+                        <div class="row">
+                            <div class="form-group col-md-4 mb-3">
+                                <label class="form-label text-muted">Question Text</label>
+                                <input type="text" class="form-control" name="question"
+                                    placeholder="Enter question text">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="form-group mb-3 col-md-8">
+                                <label class="form-label text-muted">Question Image</label>
+                                <input type="file" class="form-control">
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <p class="text-muted">current image</p>
+                                <img src="" id="question-image" width="100px" height="100px"
+                                    class="img-fluid rounded-circle">
+                            </div>
+                        </div>
+
+                        <table class="table table-bordered align-middle">
+                            <thead class="table-light text-center">
+                                <tr>
+                                    <th style="width: 70%">Answer</th>
+                                    <th style="width: 30%">Is Correct</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <input type="text" class="form-control" name="answers[0][text]"
+                                            placeholder="Choice 1">
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="form-check form-switch d-flex justify-content-center">
+                                            <input class="form-check-input" type="radio" role="switch"
+                                                data-row-index="0" name="correctAnswer">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="text" class="form-control" name="answers[1][text]"
+                                            placeholder="Choice 2">
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="form-check form-switch d-flex justify-content-center">
+                                            <input class="form-check-input" type="radio" data-row-index="1"
+                                                name="correctAnswer">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="text" class="form-control" name="answers[2][text]"
+                                            placeholder="Choice 3">
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="form-check form-switch d-flex justify-content-center">
+                                            <input class="form-check-input" type="radio" data-row-index="2"
+                                                name="correctAnswer">
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="text" class="form-control" name="answers[3][text]"
+                                            placeholder="Choice 2">
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="form-check form-switch d-flex justify-content-center">
+                                            <input class="form-check-input" type="radio" data-row-index="3"
+                                                name="correctAnswer">
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="error-div">
+                        <span class="text-danger"></span>
+                    </div>
+
+                    <div>
+                        <button type="submit" class="btn btn-info" id="submitAndAddBtn">Save</button>
+                    </div>
+                </div>
+            </form>
         </div>
+
     </div>
-</nav>
 
-<div class="container my-5">
-    <form id="question-data-form">
-        <div class="card shadow p-4">
-            <div class="card question-card p-3 mb-4 shadow-sm">
-                <h5 class="mb-3" id="question-num">Edit Question</h5>
-
-                <div class="row">
-                    <div class="form-group col-md-4 mb-3">
-                        <label class="form-label text-muted">Question Text</label>
-                        <input type="text" class="form-control" name="question" placeholder="Enter question text">
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="form-group mb-3 col-md-8">
-                        <label class="form-label text-muted">Question Image</label>
-                        <input type="file" class="form-control">
-                    </div>
-                    <div class="col-md-4 text-center">
-                        <p class="text-muted">current image</p>
-                        <img src="" id="question-image" width="100px" height="100px" class="img-fluid rounded-circle">
-                    </div>
-                </div>
-                
-                    <table class="table table-bordered align-middle">
-                        <thead class="table-light text-center">
-                            <tr>
-                                <th style="width: 70%">Answer</th>
-                                <th style="width: 30%">Is Correct</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <input type="text" class="form-control" name="answers[0][text]" placeholder="Choice 1">
-                                </td>
-                                <td class="text-center">
-                                    <div class="form-check form-switch d-flex justify-content-center">
-                                        <input class="form-check-input" type="radio" role="switch" data-row-index="0" name="correctAnswer">
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="text" class="form-control" name="answers[1][text]" placeholder="Choice 2">
-                                </td>
-                                <td class="text-center">
-                                    <div class="form-check form-switch d-flex justify-content-center">
-                                        <input class="form-check-input" type="radio" data-row-index="1" name="correctAnswer">
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="text" class="form-control" name="answers[2][text]" placeholder="Choice 3">
-                                </td>
-                                <td class="text-center">
-                                    <div class="form-check form-switch d-flex justify-content-center">
-                                        <input class="form-check-input" type="radio" data-row-index="2" name="correctAnswer">
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="text" class="form-control" name="answers[3][text]" placeholder="Choice 2">
-                                </td>
-                                <td class="text-center">
-                                    <div class="form-check form-switch d-flex justify-content-center">
-                                        <input class="form-check-input" type="radio" data-row-index="3" name="correctAnswer">
-                                    </div>
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-            </div>
-
-            <div class="error-div">
-                <span class="text-danger"></span>
-            </div>
-
-            <div>
-                <button type="submit" class="btn btn-info" id="submitAndAddBtn">Save</button>
-            </div>
-        </div>
-
-    </form>
-</div>
-
-<script src="bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="fontawesome/js/all.min.js"></script>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script type="module" src="js/navbar.js"></script>
-<script type="module" src="js/edit-question.js"></script>
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="fontawesome/js/all.min.js"></script>
+    <script src="js/main.js"></script>
+    <script type="module" src="js/navbar.js"></script>
+    <script type="module" src="js/edit-question.js"></script>
 </body>
+
 </html>
