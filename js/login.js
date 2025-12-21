@@ -21,10 +21,14 @@ loginForm.addEventListener("submit", function (e) {
         switch (typeValue){
             case "student":
                 let students = getAllStudents();
+                if(! students)
+                    window.location.href = "index.html";
                 handleUserLogin(email, password, 'student', students);
                 break;
             case "teacher": 
                 let teachers = getAllTeachers();
+                if(! teachers)
+                    window.location.href = "index.html";
                 handleUserLogin(email, password, 'teacher', teachers);
                 break;
         }
