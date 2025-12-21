@@ -180,7 +180,7 @@ function loadQuestion() {
     q.answers.forEach((choice, index) => {
         const btn = document.createElement('button');
         btn.className = 'choice-btn';
-        btn.textContent = `${index}- ${choice.text}`;
+        btn.textContent = `${choice.text}`;
         btn.dataset.index = index;
         container.appendChild(btn);
     });
