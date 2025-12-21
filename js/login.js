@@ -3,6 +3,19 @@ import * as localStorageManager from "./LocalStorageManager.js";
 sessionStorage.removeItem("currentExam")
 let loginForm = document.querySelector("#login-form");
 
+if(localStorage.getItem("user_id") && localStorage.getItem("user_type")){
+    switch (localStorage.getItem("user_type")) {
+    case "teacher":
+        window.location.href = "teacher-profile.html";
+        break;
+    case "student":
+        window.location.href = "student-profile.html";
+        break;
+    default:
+        break;
+    }
+}
+
 loginForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
@@ -52,9 +65,9 @@ function handleUserLogin(email, password, type, data)
     {
         throw new Error("wrong credentials.!");
     }
-    localStorageManager.store("user_id", user.id);
+    localStorage.setItem("user_id", user.id);
     localStorageManager.store('user', user);
-    localStorageManager.store('user_type', type);
+    localStorage.setItem('user_type', type);
     switch (type){
         case "student":
             window.location.href = "student-profile.html";
