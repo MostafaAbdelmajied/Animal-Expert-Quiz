@@ -77,9 +77,8 @@ function renderQuestions() {
 
 
 window.deleteQuestion = function (questionId) {
-    // TODO need to change to 15
-    if(exam.questions_id.length <= 1) {
-        Swal.fire("Error", "Exam must have at least one question", "error");
+    if(exam.questions_id.length <= 15) {
+        Swal.fire("Error", "Exam must have at least 15 question", "error");
         return;
     }
     Swal.fire({

@@ -34,6 +34,7 @@ let totalDegree = 0;
                 questionDataForm.reset();
                 questionNumElement.innerText = "Question" + " " + (exam.questions_id.length + 1);
                 totalDegreeSpan.innerText = totalDegree;
+                errorDiv.style.display = "none";
             }
         }
     });
