@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>exam result</title>
+
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <div class="d-flex flex-column flex-md-row">
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="flex-shrink-0 sidebar" style="width:240px; min-height:100vh;">
+
+            <div class="d-flex justify-content-center align-items-center mb-4" id="app-header">
+                <img src="assets/logo.png" alt="Logo" class="rounded-circle me-2" width="50px">
+            </div>
+
+            <!-- taps -->
+            <ul class="nav flex-column gap-2">
+                <li class="nav-item">
+                    <a href="teacher-profile.html" class="nav-link text-white">
+                        <i class="fa fa-user me-2"></i>Profile
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="create-exam.html" class="nav-link text-white">
+                        <i class="fa fa-plus me-2"></i>Create Exam
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="teacher-exams.html" class="nav-link text-white">
+                        <i class="fa fa-file-signature me-2"></i>My exams
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+
+        <!-- Main content -->
+        <div class="flex-grow-1">
+
+            <!-- Navbar -->
+            <nav class="navbar navbar-light bg-white px-3">
+                <button class="btn btn-outline-secondary me-3 d-md-none" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+
+                <div class="ms-auto d-flex align-items-center">
+                    <button class="btn btn-outline-secondary border-0 me-3" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+
+                    <i class="fa fa-user me-2"></i>
+                    <span id="nav-user-name" class="me-3"></span>
+
+                    <button class="btn btn-outline-success" id="logoutBtn">
+                        <i class="fa fa-sign-out"></i>
+                    </button>
+                </div>
+            </nav>
+
+            <!-- Content -->
+            <div class="container-fluid my-5" id="examResultContainer"></div>
+
+            <div class="card mb-4 shadow-sm d-none" id="questionTemplate">
+                <div class="card-body">
+                    <h5 class="question-title d-flex justify-content-between align-items-center mb-3"></h5>
+
+                    <img class="question-image img-fluid rounded mb-3 d-none" style="max-height:200px">
+
+                    <ul class="list-group answers-list"></ul>
+
+                    <p class="no-answer text-danger fw-semibold d-none">
+                        No answer chosen
+                    </p>
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="fontawesome/js/all.min.js"></script>
+    <script src="js/main.js"></script>
+    <script type="module" src="js/navbar.js"></script>
+    <script type="module" src="js/exam-result.js"></script>
+</body>
+
+</html>

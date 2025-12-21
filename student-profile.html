@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="fontawesome/css/all.min.css">
+    <style>
+        /* Light Theme (Default) */
+        :root {
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #212529;
+            --text-muted: #6c757d;
+            --navbar-bg: #ffffff;
+            --shadow: rgba(0,0,0,.1);
+            --shadow-hover: rgba(0,0,0,.15);
+            --border-color: #dee2e6;
+        }
+
+        /* Dark Theme */
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text-color: #e9ecef;
+            --text-muted: #adb5bd;
+            --navbar-bg: #2d2d2d;
+            --shadow: rgba(0,0,0,.3);
+            --shadow-hover: rgba(0,0,0,.5);
+            --border-color: #495057;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .navbar {
+            background-color: var(--navbar-bg) !important;
+            box-shadow: 0 2px 4px var(--shadow);
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar-brand {
+            color: var(--text-color) !important;
+        }
+
+        .user-section span {
+            color: var(--text-color);
+        }
+
+        .profile-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 4px var(--shadow);
+        }
+
+        .user-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px var(--shadow-hover) !important;
+        }
+
+        .card-body {
+            color: var(--text-color);
+        }
+
+        .exam-card {
+            border-left: 4px solid #0d6efd;
+        }
+
+        .exam-card.completed {
+            border-left-color: #198754;
+        }
+
+        .badge {
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px 12px 0 0;
+            text-align: center;
+        }
+
+        .profile-avatar-large {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,.2);
+            margin-bottom: 15px;
+        }
+
+        .text-muted {
+            color: var(--text-muted) !important;
+        }
+
+        /* Theme Toggle Button */
+        #themeToggle {
+            background: transparent;
+            border: 2px solid var(--text-color);
+            color: var(--text-color);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #themeToggle:hover {
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            transform: rotate(180deg);
+        }
+
+        /* Dark theme adjustments for headings */
+        [data-theme="dark"] h3,
+        [data-theme="dark"] h4,
+        [data-theme="dark"] h5,
+        [data-theme="dark"] strong {
+            color: var(--text-color);
+        }
+    </style>
+</head>
+<body>
+
+<!-- start nav -->
+<nav class="navbar navbar-expand-lg navbar-light">
+    <div class="container-fluid">
+        <a class="navbar-brand fw-bold" href="#">
+            <img src="./assets/logo.png" class="rounded-circle me-2" width="50">
+            Animal Expert Quiz
+        </a>
+
+        <div class="user-section">
+            <!-- Theme Toggle Button -->
+            <button id="themeToggle" title="Toggle Theme">
+                <i class="fa fa-moon"></i>
+            </button>
+            
+            <img id="nav-avatar" src="" 
+                 alt="Profile" class="profile-avatar">
+            <span id="nav-user-name" class="fw-semibold">Student Name</span>
+            <button class="btn btn-outline-danger btn-sm ms-2" id="logoutBtn">
+                <i class="fa fa-sign-out-alt"></i>
+            </button>
+        </div>
+    </div>
+</nav>
+<!-- end nav -->
+
+<div class="container my-5">
+
+    <!-- Profile Card -->
+    <div class="card shadow mb-5">
+        <div class="profile-header">
+            <img id="profile-avatar-large" 
+                 src="" 
+                 alt="Profile" class="profile-avatar-large">
+            <h3 id="profile-name-header" class="mb-0">Student Name</h3>
+            <p id="profile-email-header" class="mb-0 opacity-75">student@example.com</p>
+        </div>
+        <div class="card-body p-4">
+            <h5 class="mb-4">
+                <i class="fa fa-id-card me-2 text-primary"></i>Profile Information
+            </h5>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <div class="d-flex align-items-center">
+                        <i class="fa fa-user text-muted me-2"></i>
+                        <div>
+                            <small class="text-muted d-block">Name</small>
+                            <strong id="profile-name">Ahmed Mohamed</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <div class="d-flex align-items-center">
+                        <i class="fa fa-envelope text-muted me-2"></i>
+                        <div>
+                            <small class="text-muted d-block">Email</small>
+                            <strong id="profile-email">ahmed.mohamed@school.com</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <div class="d-flex align-items-center">
+                        <i class="fa fa-phone text-muted me-2"></i>
+                        <div>
+                            <small class="text-muted d-block">Phone</small>
+                            <strong id="profile-phone">+20 123 456 7890</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <div class="d-flex align-items-center">
+                        <i class="fa fa-graduation-cap text-muted me-2"></i>
+                        <div>
+                            <small class="text-muted d-block">Grade</small>
+                            <span id="profile-grade" class="badge bg-primary">Grade 10</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Exams Section -->
+    <h4 class="mb-4">
+        <i class="fa fa-book me-2 text-primary"></i>My Exams
+    </h4>
+
+    <div class="row" id="exams-container">
+        <!-- Exam cards will be dynamically loaded here -->
+    </div>
+
+</div>
+
+<!-- Exam Card Templates (Hidden) -->
+<div id="exam-templates" style="display: none;">
+    <!-- Template for Completed Exam -->
+    <div class="col-md-6 col-lg-4 mb-4 exam-card-item " data-template="completed">
+        <div class="card shadow exam-card completed pb-4 ">
+            <div class="card-body">
+                <h5 class="card-title exam-title"></h5>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="badge bg-success">Completed</span>
+                    <strong class="text-success fs-4 exam-score"></strong>
+                </div>
+                <div class="mb-3">
+                    <small class="text-muted"><i class="fa fa-calendar me-1"></i>Completed: <span class="exam-date"></span></small>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Template for Not Started Exam -->
+    <div class="col-md-6 col-lg-4 mb-4 exam-card-item" data-template="not-started">
+        <div class="card shadow exam-card" style="border-left-color: #0d6efd;">
+            <div class="card-body">
+                <h5 class="card-title exam-title"></h5>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <span class="badge bg-info">Not Started</span>
+                    <span class="text-muted"><i class="fa fa-clock"></i> <span class="exam-duration"></span> min</span>
+                </div>
+                <div class="mb-3">
+                    <small class="text-muted"><i class="fa fa-calendar me-1"></i>Available now</small>
+                </div>
+                <button class="btn btn-primary btn-sm w-100 start-exam-btn">
+                    <i class="fa fa-play me-1"></i>Start Exam
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="fontawesome/js/all.min.js"></script>
+
+<!-- Theme Toggle Script -->
+<script>
+    // Check for saved theme preference or default to light mode
+    const currentTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    
+    // Update icon based on current theme
+    const themeIcon = document.querySelector('#themeToggle i');
+    if (currentTheme === 'dark') {
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+    }
+
+    // Theme toggle functionality
+    document.getElementById('themeToggle').addEventListener('click', function() {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        // Update theme
+        document.documentElement.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+        
+        // Update icon
+        const icon = this.querySelector('i');
+        if (newTheme === 'dark') {
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        } else {
+            icon.classList.remove('fa-sun');
+            icon.classList.add('fa-moon');
+        }
+    });
+</script>
+
+<script type="module" src="./js/student.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam</title>
+
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="fontawesome/css/all.min.css">
+    <style>
+        /* Light Theme (Default) */
+        :root {
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
+            --text-secondary: #374151;
+            --border-color: #e5e7eb;
+            --shadow: rgba(0, 0, 0, 0.1);
+            --choice-bg: #ffffff;
+            --choice-border: #e5e7eb;
+        }
+
+        /* Dark Theme */
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text-color: #e9ecef;
+            --text-secondary: #d1d5db;
+            --border-color: #495057;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --choice-bg: #3a3a3a;
+            --choice-border: #555555;
+        }
+
+        body {
+            background-color: var(--bg-color) !important;
+            color: var(--text-color);
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .blue {
+            color: #667eea;
+        }
+
+        .timer-bar {
+            height: 8px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 5;
+            overflow: hidden;
+        }
+
+        .exam-container {
+            max-width: 600px;
+            margin: 60px auto 30px;
+            padding: 20px;
+        }
+
+        .level-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .easy {
+            background: #10b981;
+            color: white;
+            box-shadow: 0 0 10px var(--shadow);
+        }
+
+        .medium {
+            background: #f59e0b;
+            color: white;
+            box-shadow: 0 0 10px var(--shadow);
+        }
+
+        .hard {
+            background: #ef4444;
+            color: white;
+            box-shadow: 0 0 10px var(--shadow);
+        }
+
+        .question-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 0 10px var(--shadow);
+        }
+
+        .choice-btn {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 3px solid var(--choice-border);
+            background: var(--choice-bg);
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-align: left;
+        }
+        
+        .choice-btn:hover:not(:disabled) {
+            border-color: #667eea;
+            transform: translateX(-5px);
+            box-shadow: 0 0 10px var(--shadow);
+        }
+
+        .choice-btn.correct {
+            background: #22c55e;
+            border: 3px solid #22c55e;
+            color: white;
+        }
+
+        .choice-btn.wrong {
+            background: #ef4444;
+            border: 3px solid #ef4444;
+            color: white;
+        }
+
+        .choice-btn:disabled {
+            cursor: not-allowed;
+        }
+
+        .next-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px var(--shadow);
+        }
+
+        .next-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            opacity: .8;
+        }
+
+        .result-circle {
+            width: 250px;
+            height: 250px;
+            margin: 30px auto;
+            position: relative;
+        }
+
+        #circleProgress {
+            width: 250px;
+            height: 250px;
+        }
+
+        .result-title {
+            font-size: 32px;
+            font-weight: bold;
+            color: var(--text-color);
+            margin-bottom: 20px;
+        }
+
+        .home-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 15px 50px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px var(--shadow);
+            margin-top: 30px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .home-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .timer-text {
+            position: fixed;
+            top: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--card-bg);
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: #667eea;
+            box-shadow: 0 0 10px var(--shadow);
+            z-index: 10;
+            transition: background-color 0.3s ease;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            transition: background-color 0.3s ease;
+        }
+
+        .text-dark {
+            color: var(--text-color) !important;
+        }
+
+        /* Theme Toggle Button */
+        #themeToggle {
+            position: fixed;
+            top: 15px;
+            right: 20px;
+            background: var(--card-bg);
+            border: 2px solid #667eea;
+            color: #667eea;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 4px 8px var(--shadow);
+        }
+
+        #themeToggle:hover {
+            background-color: #667eea;
+            color: white;
+            transform: rotate(180deg);
+        }
+
+        [data-theme="dark"] .result-circle {
+            color: var(--text-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Theme Toggle Button -->
+    <button id="themeToggle" title="Toggle Theme">
+        <i class="fa fa-moon"></i>
+    </button>
+
+    <div class="timer-bar">
+        <div class="h-100" style="background-color: #30CD69;" id="timerFill"></div>
+    </div>
+    <div class="timer-text" id="timerText">00:00</div>
+
+    <div class="exam-container">
+        <div class="card shadow-sm border-0 rounded-4 p-4" id="questionCard">
+            <div class="fw-bold mb-2 d-block blue" style="font-size:20px;" id="questionNumber">Question number</div>
+            <div class="text-center">
+                <span class="level-badge" id="levelBadge">easy</span>
+            </div>
+            <img src="" alt="Question" class="question-image" id="questionImage">
+            <div class="fs-4 fw-semibold text-dark mb-4 text-center" id="questionText">Lorem, ipsum.</div>
+            <div id="choicesContainer">
+                <button class="choice-btn" data-index="1">Lorem ipsum dolor sit.</button>
+                <button class="choice-btn" data-index="2">Lorem ipsum dolor sit.</button>
+                <button class="choice-btn" data-index="3">Lorem ipsum dolor sit.</button>
+                <button class="choice-btn" data-index="4">Lorem ipsum dolor sit.</button>
+            </div>
+            <div class="text-center mt-4">
+                <button class="next-btn" id="nextBtn" disabled>Next</button>
+            </div>
+        </div>
+
+        <div class="card shadow-sm border-0 rounded-4 p-4 text-center" id="resultCard" style="display: none;">
+            <div class="result-title">Exam Results</div>
+            <div class="result-circle">
+                <div id="circleProgress"></div>
+            </div>
+            <div style="font-size: 20px; color: #6b7280;">
+                <span id="correctAnswers">0</span> From <span id="totalQuestions">0</span>
+            </div>
+            <button class="home-btn">Home</button>
+        </div>
+    </div>
+
+    <script src="bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="fontawesome/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/1.1.0/progressbar.min.js"></script>
+
+    <!-- Theme Toggle Script -->
+    <script>
+        // Check for saved theme preference or default to light mode
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        
+        // Update icon based on current theme
+        const themeIcon = document.querySelector('#themeToggle i');
+        if (currentTheme === 'dark') {
+            themeIcon.classList.remove('fa-moon');
+            themeIcon.classList.add('fa-sun');
+        }
+
+        // Theme toggle functionality
+        document.getElementById('themeToggle').addEventListener('click', function() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            // Update theme
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Update icon
+            const icon = this.querySelector('i');
+            if (newTheme === 'dark') {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+    </script>
+
+
+
+<script type="module" src="./js/examh.js"></script>
+</body>
+</html>
