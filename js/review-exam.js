@@ -6,9 +6,12 @@ let totalDegreeEl = document.getElementById("total-degree");
 let errorDiv = document.getElementById("error-div");
 let publishBtn = document.getElementById("publishExamBtn");
 let addQuestionBtn = document.getElementById("addQuestion");
+let creationExamId = localStorageManager.getStringKey("current_creation_exam_id");
 
 let examId = localStorageManager.getStringKey("current_review_exam_id");
 if (!examId) window.location.href = "create-exam.html";
+if( ! creationExamId)
+    addQuestionBtn.remove();
 
 let exam = new Exam(localStorageManager.findById(examId, "exams"));
 
@@ -74,6 +77,11 @@ function renderQuestions() {
 
 
 window.deleteQuestion = function (questionId) {
+    // TODO need to change to 15
+    if(exam.questions_id.length <= 1) {
+        Swal.fire("Error", "Exam must have at least one question", "error");
+        return;
+    }
     Swal.fire({
         title: "Are you sure?",
         text: "This question will be deleted",
@@ -112,12 +120,21 @@ publishBtn.addEventListener("click", function () {
         return;
     }
 
+    if(! exam.isComplete()) {
+        exam.questions_num = exam.questions_id.length;
+        localStorageManager.update(exam.id, exam, "exams");
+    }
+
     Swal.fire({
         title: "Success",
-        text: "Exam published successfully",
+        text: "Exam saved successfully",
         icon: "success"
     });
 
+    if(! creationExamId || creationExamId != examId){
+        window.location.href = "teacher-exams.html";
+        return;
+    }
     window.location.href = "add-students.html";
 });
 
@@ -149,10 +166,4 @@ window.updateLevel = function (questionId, newLevel) {
 window.editQuestion = function (questionId){
     localStorageManager.store("current_edit_question_id", questionId);
     window.location.href = "edit-question.html";
-}
-
-function showError(message)
-{
-    errorDiv.style.display = "block";
-    errorDiv.querySelector('span').innerText = message;
 }

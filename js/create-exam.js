@@ -3,6 +3,9 @@ import * as localStorageManager from "./LocalStorageManager.js";
 let examInfoForm = document.getElementById("exam-info-form");
 let errorDiv = document.querySelector(".error-div");
 
+if(localStorageManager.getStringKey("current_review_exam_id"))
+    localStorageManager.deleteKey("current_review_exam_id");
+
 if(examInfoForm){
     examInfoForm.addEventListener("submit", function(e) {
         e.preventDefault(); 

@@ -73,3 +73,22 @@ export function completeExams(id, key) {
     return items.length ? items : null; 
 }
 
+export function filterByAttribute(attribute, value, key)
+{
+    let data = getAll(key);
+    let items = data.filter(item => item[attribute] == value);
+    return items || null;
+}
+
+export function orderBy(key, attribute="id", method= "asc")
+{
+    let data = getAll(key);
+    data.sort((a, b) => {
+        if(method === "asc") {
+            return (a[attribute] > b[attribute]) ? 1 : ((a[attribute] < b[attribute]) ? -1 : 0);
+        } else {
+            return (a[attribute] < b[attribute]) ? 1 : ((a[attribute] > b[attribute]) ? -1 : 0);
+        }
+    });
+    return data;
+}
