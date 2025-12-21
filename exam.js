@@ -1,70 +1,214 @@
+import * as ls from "./js/LocalStorageManager.js";
+    //   let stud=ls.findById(ls.getStringKey("user_id"),"students");
+    //     stud.current_exam=101;
+    //     ls.update(stud.id,stud,"students");
+class StudentExams{
 
-let exam=
-    {
-        "id": 1766160800350,
-        "name": "test",
-        "questions_num": "3",
-        "duration": "10",
-        "questions_id": [
-            1766160875059,
-            1766161012736,
-            1766161044098
-        ]
+    constructor(student) {
+        this.id=Date.now();
+        this.stdId=student.id;
+        this.finish=false;
+        this.examId=student.current_exam;
+        // console.log(this.examId);
+        this.questions_id=this.shuffleQuestion();
+       this.questions=[];
+       this.totalScore=0;
+        this.question();
+        sessionStorage.setItem("currentExam",`${this.id}`);
+        this.updateStudent();
     }
-;
+
+    shuffleQuestion(){
+        let exam=ls.findById(this.examId,"exams");
+         return this.questions_id=shuffle(exam.questions_id);
+    }
+    updateStudent(){
+              let stud=ls.findById(this.stdId,"students");
+              const index = stud.required_exams.indexOf(this.examId);
+
+                if (index !== -1) {
+                stud.required_exams.splice(index, 1);
+                }
+                stud.finished_exams.push(this.examId);
+                ls.update(stud.id,stud,"students");
+    }
+
+    question(){
+        for (let i=0;i<this.questions_id.length;++i){
+            let qs=ls.findById(this.questions_id[i],"questions");
+            // console.log(qs)
+            qs.answers=shuffle(qs.answers);
+            qs.choice=null;
+            qs.correct=getCorrectAnswerIndex(qs.answers);
+            this.questions.push(qs);
+        }
+    }
+
+}
+function getCorrectAnswerIndex(answers) {
+  return answers.findIndex(answer => answer.correct === true);
+}
+    function shuffle(array) {
+  return array
+    .map(v => ({ v, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map(({ v }) => v);
+}
+
+function storeExam(std,key){
+    if(!ls.findExam(std.id,std.current_exam,key)){
+        ls.saveItem(new StudentExams(std),key);
+        }else{
+            console.log("mawgod");
+        }
+}
+
+/**
+ * the exact exam was showed for student in LS
+ * finishExams=[stdId:{},] 
+ * 
+ */
+// student.required_exams.push(1766160800350);
+// student.current_exam=1766160800350;
+// ls.update(1766209767882,student,"students")
+
+// ls.store("user_id",1766252222138)
+let student=ls.findById((ls.getStringKey("user_id")),"students");
+// console.log(ls.findExam(student.id,student.current_exam,"StudentExams"));
+// storeExam(student.id,student.current_exam,"StudentExams");
+storeExam(student,"student_exam");
+// console.log(student);
+// console.log(ls.findById(1766160800350,"exams"))
+
+let studentExam=ls.findExam(student.id,student.current_exam,"student_exam");
+console.log(studentExam);
+const questions=studentExam.questions
+console.log(questions)
+/**
+ * {
+    "id": 1766209767882,
+    "name": "lycelyfawa",
+    "password": "UGEkJHcwcmQh",
+    "email": "jydaj@mailinator.com",
+    "phone": "+201017012231",
+    "grade": "2",
+    "image": null,
+    "required_exams": [
+        1766160800350
+    ],
+    "finished_exams": [],
+    "current_exam": 1766160800350
+}
+
+{
+    "id": 1766160800350,
+    "name": "test",
+    "questions_num": "3",
+    "duration": "10",
+    "questions_id": [
+        1766160875059,
+        1766161012736,
+        1766161044098
+    ]
+}
+ */
+
+// let q=
+// {
+//     "question": "Lorem ipsum dolor sit amet.",
+//     "degree": 25,"level": "easy","image": "https://res.cloudinary.com/dpjzyrtcp/image/upload/v1766160877/bvivdputxyu1lif4dbol.jpg",
+//     "answers": [
+//         {
+//             "text": "Lorem ipsum dolor sit amet.",
+//             "correct": true
+//         },
+//         {
+//             "text": "Lorem ipsum dolor sit amet.",
+//             "correct": false
+//         },
+//         {
+//             "text": "Lorem ipsum dolor sit amet.",
+//             "correct": false
+//         },
+//         {
+//             "text": "Lorem ipsum dolor sit amet.",
+//             "correct": false
+//         }
+//     ],
+//     "id": 1766160875059
+// };
+// let exam=
+//     {
+//         "id": 1766160800350,
+//         "name": "test",
+//         "questions_num": "3",
+//         "duration": "10",
+//         "questions_id": [
+//             1766160875059,
+//             1766161012736,
+//             1766161044098
+//         ]
+//     };
 
 
-        const questions = [
-            {
-                image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=400&fit=crop",
-                question: "Lorem ipsum dolor sit amet.",
-                choices: ["Lorem ipsum dolor sit amet.", "Lorem ipsum dolor sit amet.", "Lorem ipsum dolor sit amet.", "Lorem ipsum dolor sit amet."],
-                correct: 0,
-                level: "easy",
-                score:40
-            },
-            {
-                image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&h=400&fit=crop",
-                question: "Lorem ipsum dolor sit amet.",
-                choices: ["5", "6", "7", "8"],
-                correct: 2,
-                level: "easy",
-                score:10
-            },
-            {
-                image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=400&fit=crop",
-                question: "Can u cry plz?",
-                choices: ["أفريقيا", "آسيا", "أوروبا", "أمريكا"],
-                correct: 1,
-                level: "middle",
-                score:15
-            },
-            {
-                image: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800&h=400&fit=crop",
-                question: "كم عدد ألوان قوس قزح؟",
-                choices: ["5", "6", "7", "8"],
-                correct: 2,
-                level: "middle",
-                score:15
-            },
-            {
-                image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=400&fit=crop",
-                question: "ما هو أطول نهر في العالم؟",
-                choices: ["النيل", "الأمازون", "المسيسبي", "الفرات"],
-                correct: 0,
-                level: "hard",
-                score:10
-            }
-        ];
+    // console.log(q.answers[0].text)
+    // let questionsNew=_.shuffle(exam["questions_id"]); 
+    // console.log(questionsNew)
+    // let newQues=findById(questionsNew[0],"questions")
+    // console.log(newQues);
+
+        // const questions = [
+        //     {
+        //         image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=400&fit=crop",
+        //         question: "Lorem ipsum dolor sit amet.",
+        //         choices: ["Lorem ipsum dolor sit amet.", "Lorem ipsum dolor sit amet.", "Lorem ipsum dolor sit amet.", "Lorem ipsum dolor sit amet."],
+        //         correct: 0,
+        //         level: "easy",
+        //         degree:40
+        //     },
+        //     {
+        //         image: "https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&h=400&fit=crop",
+        //         question: "Lorem ipsum dolor sit amet.",
+        //         choices: ["5", "6", "7", "8"],
+        //         correct: 2,
+        //         level: "easy",
+        //         degree:10
+        //     },
+        //     {
+        //         image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&h=400&fit=crop",
+        //         question: "Can u cry plz?",
+        //         choices: ["أفريقيا", "آسيا", "أوروبا", "أمريكا"],
+        //         correct: 1,
+        //         level: "middle",
+        //         degree:15
+        //     },
+        //     {
+        //         image: "https://images.unsplash.com/photo-1509228468518-180dd4864904?w=800&h=400&fit=crop",
+        //         question: "كم عدد ألوان قوس قزح؟",
+        //         choices: ["5", "6", "7", "8"],
+        //         correct: 2,
+        //         level: "middle",
+        //         degree:15
+        //     },
+        //     {
+        //         image: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=400&fit=crop",
+        //         question: "ما هو أطول نهر في العالم؟",
+        //         choices: ["النيل", "الأمازون", "المسيسبي", "الفرات"],
+        //         correct: 0,
+        //         level: "hard",
+        //         degree:10
+        //     }
+        // ];
         
-        let min=5
+        let min=10;
         let currentQuestion = 0;
         let totalScore = 0;
         let maxScore = 100;
         let answered = false;
-        const examDuration = min *60;
-        // const questionTimeLimit = examDuration/questions.length; // 
-        const questionTimeLimit = 5; // 
+        const examDuration = +ls.findById(studentExam.examId,"exams").duration *60;
+        const questionTimeLimit = examDuration/questions.length; // 
+        // console.log("du==left",examDuration,"===",questionTimeLimit)
+        // const questionTimeLimit = 5; // 
         let timeRemaining = examDuration;
         let questionTimer;
         let mainTimer;
@@ -118,10 +262,19 @@ function loadSession() {
 
     return 'exam';
 }
+console.log(studentExam.id);
+console.log(studentExam.questions[currentQuestion]);
+
 
 function loadQuestion() {
-    answered = false;
     const q = questions[currentQuestion];
+    console.log(q)
+    answered = false;
+    if(!studentExam.finish){
+
+        studentExam.finish=true;
+        ls.update(studentExam.id,studentExam,"student_exam");
+    }
 
     document.getElementById('questionNumber').textContent =
         `Question ${currentQuestion + 1} from ${questions.length}:`;
@@ -134,11 +287,10 @@ function loadQuestion() {
 
     const container = document.getElementById('choicesContainer');
     container.innerHTML = '';
-
-    q.choices.forEach((choice, index) => {
+    q.answers.forEach((choice, index) => {
         const btn = document.createElement('button');
         btn.className = 'choice-btn';
-        btn.textContent = choice;
+        btn.textContent = `${index}- ${choice.text}`;
         btn.dataset.index = index;
         container.appendChild(btn);
     });
@@ -151,6 +303,7 @@ function loadQuestion() {
         answered = true;
         const selected = userAnswers[currentQuestion];
         const correct = q.correct;
+        console.log(q.correct);
 
         document.querySelectorAll('.choice-btn').forEach((btn, i) => {
             btn.disabled = true;
@@ -169,8 +322,10 @@ function loadQuestion() {
         container.addEventListener('click', function (e) {
             const btn = e.target.closest('.choice-btn');
             if (!btn || answered) return;
-        
             const index = Number(btn.dataset.index);
+            // studentExam.questions[currentQuestion].choice=index;
+            // ls.update(studentExam.id,studentExam,"student_exam");
+            sessionStorage.removeItem("currentExam");
             selectAnswer(index);
         });
 
@@ -195,12 +350,14 @@ function loadQuestion() {
                     btn.classList.add('wrong');
                 }
             });
-            
+            studentExam.questions[currentQuestion].choice=index;
             document.getElementById('nextBtn').disabled = false;
             if (index === correct) {
-                totalScore +=questions[currentQuestion].score;
+                totalScore +=questions[currentQuestion].degree;
+                studentExam.totalScore=totalScore;
                 console.log(totalScore);
             }
+            ls.update(studentExam.id,studentExam,"student_exam");
                 saveSession();
         }
 
@@ -236,13 +393,13 @@ function loadQuestion() {
             saveResult();
             document.getElementById('questionCard').style.display = 'none';
             document.getElementById('resultCard').style.display = 'block';
-            document.getElementById('correctAnswers').textContent = totalScore;
+            document.getElementById('correctAnswers').textContent = studentExam.totalScore;
             document.getElementById('totalQuestions').textContent = maxScore;
             
             var circleColor;
-            if (totalScore < 50) {
+            if (studentExam.totalScore < 50) {
                 circleColor = '#ef4444'; 
-            } else if (totalScore < 70) {
+            } else if (studentExam.totalScore < 70) {
                 circleColor = '#f59e0b';
             } else {
                 circleColor = '#22c55e'; 
@@ -278,7 +435,7 @@ function loadQuestion() {
                 }
             });
             
-            circle.animate(totalScore / 100);
+            circle.animate(studentExam.totalScore / 100);
         }
 
 
@@ -301,20 +458,26 @@ const homeBtn = document.querySelector('.home-btn');
 
 homeBtn.addEventListener('click', () => {
     sessionStorage.removeItem("examSession");
-    window.location.href = 'profile.html'; 
+    // window.location.href = 'profile.html'; 
+    window.location.replace('student-profile.html');
+
 });
 
 
 
         const session=loadSession();
-
-        // console.log(session);
+        let flag=sessionStorage.getItem("currentExam")
+        console.log(session);
         if (session === 'result') {
             showResult();
             updateMainTimer();
 
 
-        } else {
+        }else if(!session && !flag && studentExam.finish){
+                showResult();
+                updateMainTimer();
+            }
+         else {
             loadQuestion();
             updateMainTimer();
                         mainTimer = setInterval(() => {

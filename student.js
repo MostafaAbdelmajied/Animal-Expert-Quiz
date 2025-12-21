@@ -178,77 +178,64 @@ document.getElementById('logoutBtn').addEventListener('click', function() {
         // window.location.href = 'login.html';
     }
 });
-// Start exam function
-function startExam(examId) {
-    console.log('Starting exam:', examId);
-    // Redirect to exam page
-    // window.location.href = `exam.html?id=${examId}`;
-    alert(`Starting exam ${examId}...`);
-}
 
-// View exam results function
-function viewExamResults(examId) {
-    console.log('Viewing results for exam:', examId);
-    // Redirect to results page
-    // window.location.href = `results.html?id=${examId}`;
-    alert(`Viewing results for exam ${examId}...`);
-}
 
 
 
 // Example exams data - Replace with your backend data
-const examsData = [
-    {
-        id: 1,
-        title: "Mammals Quiz",
-        description: "Understanding mammal characteristics and behavior",
-        duration: 30,
-        status: "completed",
-        score: 92,
-        completedDate: "Dec 15, 2025"
-    },
-    {
-        id: 2,
-        title: "Birds & Flight",
-        description: "Exploring avian species and their abilities",
-        duration: 30,
-        status: "not_started",
-        score: null,
-        completedDate: null
-    },
-    {
-        id: 3,
-        title: "Marine Life",
-        description: "Ocean creatures and their ecosystems",
-        duration: 45,
-        status: "completed",
-        score: 78,
-        completedDate: "Dec 10, 2025"
-    },
-    {
-        id: 4,
-        title: "Reptiles & Amphibians",
-        description: "Cold-blooded vertebrates study",
-        duration: 45,
-        status: "not_started",
-        score: null,
-        completedDate: null
-    },
-    {
-        id: 5,
-        title: "Insects & Arthropods",
-        description: "Study of insects and their characteristics",
-        duration: 40,
-        status: "completed",
-        score: 88,
-        completedDate: "Dec 12, 2025"
-    }
-];
+// const examsData = [
+//     {
+//         id: 1,
+//         title: "Mammals Quiz",
+//         description: "Understanding mammal characteristics and behavior",
+//         duration: 30,
+//         status: "completed",
+//         score: 92,
+//         completedDate: "Dec 15, 2025"
+//     },
+//     {
+//         id: 2,
+//         title: "Birds & Flight",
+//         description: "Exploring avian species and their abilities",
+//         duration: 30,
+//         status: "not_started",
+//         score: null,
+//         completedDate: null
+//     },
+//     {
+//         id: 3,
+//         title: "Marine Life",
+//         description: "Ocean creatures and their ecosystems",
+//         duration: 45,
+//         status: "completed",
+//         score: 78,
+//         completedDate: "Dec 10, 2025"
+//     },
+//     {
+//         id: 4,
+//         title: "Reptiles & Amphibians",
+//         description: "Cold-blooded vertebrates study",
+//         duration: 45,
+//         status: "not_started",
+//         score: null,
+//         completedDate: null
+//     },
+//     {
+//         id: 5,
+//         title: "Insects & Arthropods",
+//         description: "Study of insects and their characteristics",
+//         duration: 40,
+//         status: "completed",
+//         score: 88,
+//         completedDate: "Dec 12, 2025"
+//     }
+// ];
 
 // Function to render exam cards using templates
 function renderExams(exams) {
     const container = document.getElementById('exams-container');
     container.innerHTML = ''; // Clear existing cards
+
     console.log(exams);
     if(Array.isArray(exams) && exams[0]!= null ){
       console.log(exams);
@@ -339,10 +326,13 @@ function createNotStartedExamCard(exam) {
       // console.log(e);
       // console.log(this);
       // console.log(Number(this.dataset.index));
-      
-      sessionStorage.setItem("currentExam",Number(this.dataset.index));
-      // window.location.href = 'exxxxxx.html';
-      window.location.replace('exxxxxx.html');
+    //   sessionStorage.setItem("currentExam",Number(this.dataset.index));
+      let stud=ls.findById(ls.getStringKey("user_id"),"students");
+        stud.current_exam=Number(this.dataset.index);
+        ls.update(stud.id,stud,"students");
+      window.location.href = 'exam.html';
+    //   window.location.replace('exam.html');
+    //   window.location.replace('student-profile.html');
     }
     );
     
@@ -390,12 +380,15 @@ function loadExams() {
         exam.push(ls.findById(questions[i],"exams"))
       console.log(ls.findById(questions[i],"exams"));
       }
-      renderExams(exam);
     }
+    renderExams(exam);
     
     // renderExams();
 }
 
+let stud=ls.findById(ls.getStringKey("user_id"),"students");
+stud.current_exam=null;
+ls.update(stud.id,stud,"students")
 // Initialize everything when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
     initProfile();
