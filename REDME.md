@@ -13,3 +13,10 @@ project notes:
     - progressbar.js for (circle progress in exam result)
     - sweet alert
     - cloudnare
+
+that are the emalis for students and teachers
+mostafa@gmail.com
+ahmed@gmail.com
+ali@gmail.com
+
+and the password is "password"
