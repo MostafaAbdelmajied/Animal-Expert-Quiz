@@ -1,7 +1,7 @@
 import * as ls from "./LocalStorageManager.js"
 
 let std=ls.findById(ls.getStringKey("user_id"),"students");
-console.log(std);
+// console.log(std);
 const profileData = {
     name: std.name,
     email: std.email,
@@ -45,14 +45,14 @@ function renderExams(exams) {
     const container = document.getElementById('exams-container');
     container.innerHTML = ''; 
 
-    console.log(exams);
+    // console.log(exams);
     if(Array.isArray(exams) && exams[0]!= null ){
-      console.log(exams);
+      // console.log(exams);
       exams.forEach(exam => {
         let card;
         
         if (exam.finish) {
-          console.log(exam);
+          // console.log(exam);
           card = createCompletedExamCard(exam);
          } else  {
            card = createNotStartedExamCard(exam);
@@ -68,7 +68,7 @@ function createCompletedExamCard(exam) {
 
     const template = document.querySelector('[data-template="completed"]');
     const clone = template.cloneNode(true);
-    console.log("inner",exam)
+    // console.log("inner",exam)
 
     clone.removeAttribute('data-template');
     clone.style.display = '';
@@ -99,7 +99,7 @@ function createNotStartedExamCard(exam) {
 
     const template = document.querySelector('[data-template="not-started"]');
     const clone = template.cloneNode(true);
-    console.log("=======",exam)
+    // console.log("=======",exam)
 
     clone.removeAttribute('data-template');
     clone.style.display = '';
@@ -144,18 +144,18 @@ function loadExams() {
     
   let exam=[]
   let completeExams=ls.completeExams(std.id,"student_exam");
-  console.log(completeExams)
+  // console.log(completeExams)
   if(completeExams){
     exam.push(...completeExams);
   }
   
     let questions=ls.findById(std.id,"students").required_exams;
-    console.log(questions)
+    // console.log(questions)
     
     if(questions.length>0){
       for(let i=0 ;i<questions.length;++i){
         exam.push(ls.findById(questions[i],"exams"))
-      console.log(ls.findById(questions[i],"exams"));
+      // console.log(ls.findById(questions[i],"exams"));
       }
     }
     renderExams(exam);
