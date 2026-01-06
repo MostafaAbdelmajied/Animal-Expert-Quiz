@@ -1,17 +1,6 @@
 import * as ls from "./LocalStorageManager.js";
+try{
 
-let permission_denied_err = sessionStorage.getItem("permission_denied");
-if(permission_denied_err)
-{
-  Swal.fire({title: "Error", text: "you dont have permission to do this action", icon: "error"});
-  sessionStorage.removeItem("permission_denied")
-}
-let user_type = ls.getStringKey("user_type");
-if(user_type != "student")
-{
-  sessionStorage.setItem("permission_denied", true);
-  window.history.back();
-}
 
     let finish=JSON.parse(sessionStorage.getItem("finished"));
 class StudentExams{
@@ -362,4 +351,8 @@ homeBtn.addEventListener('click', () => {
 
 
 
-        
+}catch(er){
+
+    window.history.back();
+
+}
