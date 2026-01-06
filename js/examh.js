@@ -353,6 +353,6 @@ homeBtn.addEventListener('click', () => {
 
 }catch(er){
 
-    window.history.back();
-
+    // window.history.back();
+    window.location.replace('student-profile.html');
 }
