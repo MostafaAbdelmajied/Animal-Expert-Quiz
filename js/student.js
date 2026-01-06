@@ -4,6 +4,13 @@ let permission_denied_err = sessionStorage.getItem("permission_denied");
 if(permission_denied_err)
 {
   Swal.fire({title: "Error", text: "you dont have permission to do this action", icon: "error"});
+  sessionStorage.removeItem("permission_denied")
+}
+let user_type = ls.getStringKey("user_type");
+if(user_type != "student")
+{
+  sessionStorage.setItem("permission_denied", true);
+  window.history.back();
 }
 let std=ls.findById(ls.getStringKey("user_id"),"students");
 // console.log(std);
