@@ -23,8 +23,11 @@ let questionNumElement = document.getElementById("question-num");
 let totalDegreeSpan = document.getElementById("total-degree");
 
 let examId = localStorageManager.getStringKey('current_creation_exam_id');
-if(! examId)
-    window.location.href = "create-exam.html";
+if(! examId){
+    examId = localStorageManager.getStringKey("current_review_exam_id");
+    if(! examId)
+        window.location.href = "create-exam.html";
+}
 let exam = new Exam(localStorageManager.findById(examId, "exams"));
 let totalDegree = 0;
 
@@ -41,17 +44,27 @@ let totalDegree = 0;
             localStorageManager.saveItem(questionData, "questions");
             totalDegree += questionData.degree;
 
-            if(exam.isComplete())
-            {
-                localStorageManager.store("current_review_exam_id", exam.id);
-                window.location.href = "review-exam.html";
-            }else{
+            if(localStorageManager.getStringKey('current_creation_exam_id') && ! exam.isComplete()){
                 Swal.fire({title: "Success", text: "question saved successfully", icon: "success"});
                 questionDataForm.reset();
                 questionNumElement.innerText = "Question" + " " + (exam.questions_id.length + 1);
                 totalDegreeSpan.innerText = totalDegree;
                 errorDiv.style.display = "none";
+            }else{
+                localStorageManager.store("current_review_exam_id", exam.id);
+                window.location.href = "review-exam.html";
             }
+            // if(exam.isComplete())
+            // {
+            //     localStorageManager.store("current_review_exam_id", exam.id);
+            //     window.location.href = "review-exam.html";
+            // }else{
+            //     Swal.fire({title: "Success", text: "question saved successfully", icon: "success"});
+            //     questionDataForm.reset();
+            //     questionNumElement.innerText = "Question" + " " + (exam.questions_id.length + 1);
+            //     totalDegreeSpan.innerText = totalDegree;
+            //     errorDiv.style.display = "none";
+            // }
         }
     });
 

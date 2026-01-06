@@ -25,11 +25,12 @@ let creationExamId = localStorageManager.getStringKey("current_creation_exam_id"
 
 let examId = localStorageManager.getStringKey("current_review_exam_id");
 if (!examId) window.location.href = "create-exam.html";
-if( ! creationExamId)
-    addQuestionBtn.remove();
+// if( ! creationExamId)
+//     addQuestionBtn.remove();
 
 let exam = new Exam(localStorageManager.findById(examId, "exams"));
 
+addQuestionBtn.hidden = false;
 if(! exam.isComplete()) addQuestionBtn.hidden = false;
 
 let totalDegree = 0, easyLevelExists = 0, mediumLevelExists = 0, hardLevelExists = 0;
@@ -92,10 +93,10 @@ function renderQuestions() {
 
 
 window.deleteQuestion = function (questionId) {
-    if(exam.questions_id.length <= 15) {
-        Swal.fire("Error", "Exam must have at least 15 question", "error");
-        return;
-    }
+    // if(exam.questions_id.length <= 15) {
+    //     Swal.fire("Error", "Exam must have at least 15 question", "error");
+    //     return;
+    // }
     Swal.fire({
         title: "Are you sure?",
         text: "This question will be deleted",
@@ -134,6 +135,10 @@ publishBtn.addEventListener("click", function () {
         return;
     }
 
+    if(exam.questions_id.length < 15){
+        Swal.fire("Error", "Exam must have at least 15 question", "error");
+        return;
+    }
     if(! exam.isComplete()) {
         exam.questions_num = exam.questions_id.length;
         localStorageManager.update(exam.id, exam, "exams");
