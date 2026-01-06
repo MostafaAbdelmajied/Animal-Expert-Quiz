@@ -1,5 +1,20 @@
 import * as localStorageManager from "./LocalStorageManager.js";
 
+let user_type = localStorageManager.getStringKey("user_type");
+let permission_denied_err = sessionStorage.getItem("permission_denied");
+
+if(permission_denied_err)
+{
+    Swal.fire({title: "Error", text: "you dont have permission to do this action", icon: "error"});
+    sessionStorage.removeItem("permission_denied");
+}
+
+if(user_type != "teacher")
+{
+    sessionStorage.setItem("permission_denied", true);
+    window.history.back();
+}
+
 let resultId = sessionStorage.getItem('current_result_id');
 let examResult = localStorageManager.findById(resultId, 'student_exam');
 let exam = localStorageManager.findById(examResult.examId, 'exams');
