@@ -1,5 +1,10 @@
 import * as ls from "./LocalStorageManager.js"
 
+let permission_denied_err = sessionStorage.getItem("permission_denied");
+if(permission_denied_err)
+{
+  Swal.fire({title: "Error", text: "you dont have permission to do this action", icon: "error"});
+}
 let std=ls.findById(ls.getStringKey("user_id"),"students");
 // console.log(std);
 const profileData = {
